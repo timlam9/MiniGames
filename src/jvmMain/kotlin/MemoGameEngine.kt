@@ -1,10 +1,7 @@
-package domain
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import platform.getImagePath
+import ui.getImagePath
 import ui.model.Photo
-import ui.model.Photos
 import ui.model.UiState
 
 private const val DELAY_TIME: Long = 1_000

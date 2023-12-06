@@ -45,7 +45,8 @@ fun PhotoCard(photo: Photo, modifier: Modifier) = with(photo) {
                         load = { loadImageBitmap(File(res)) },
                         painterFor = { remember { BitmapPainter(it) } },
                         contentDescription = id,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
                     )
                 }
             }
