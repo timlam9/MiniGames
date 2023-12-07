@@ -1,5 +1,6 @@
 package ui.components.memo
 
+import LogCompositions
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -41,8 +42,11 @@ fun PhotoCard(photo: Photo, modifier: Modifier) = with(photo) {
                         contentScale = ContentScale.Crop,
                     )
                 } else {
+                    val image = loadImageBitmap(File(res))
+                    LogCompositions(msg = "Bitmap: $image for photo: ${photo.name}, with id: ${photo.id}")
+
                     AsyncImage(
-                        load = { loadImageBitmap(File(res)) },
+                        load = { image },
                         painterFor = { remember { BitmapPainter(it) } },
                         contentDescription = id,
                         modifier = Modifier.fillMaxSize(),

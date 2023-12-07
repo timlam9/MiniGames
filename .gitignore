@@ -40,3 +40,8 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+/.idea/gradle.xml
+/.idea/artifacts/MiniGames_jvm_1_0_SNAPSHOT.xml
+/.idea/misc.xml
+/.idea/vcs.xml
