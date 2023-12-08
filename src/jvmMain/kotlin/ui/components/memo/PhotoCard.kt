@@ -20,6 +20,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ui.scaledImage
 import ui.model.Photo
 import java.io.File
 
@@ -42,7 +43,7 @@ fun PhotoCard(photo: Photo, modifier: Modifier) = with(photo) {
                         contentScale = ContentScale.Crop,
                     )
                 } else {
-                    val image = loadImageBitmap(File(res))
+                    val image = File(res).scaledImage()
                     LogCompositions(msg = "Bitmap: $image for photo: ${photo.name}, with id: ${photo.id}")
 
                     AsyncImage(
