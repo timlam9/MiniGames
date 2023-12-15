@@ -1,4 +1,4 @@
-package ui.model
+package ui.model.memo
 
 data class Photo(
     val id: String,

@@ -1,4 +1,4 @@
-package ui.model
+package ui.model.memo
 
 import androidx.compose.runtime.Stable
 

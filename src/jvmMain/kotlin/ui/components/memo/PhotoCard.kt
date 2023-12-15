@@ -21,7 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ui.scaledImage
-import ui.model.Photo
+import ui.model.memo.Photo
 import java.io.File
 
 @Composable

@@ -1,8 +1,13 @@
+package games
+
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import ui.getImagePath
-import ui.model.Photo
-import ui.model.UiState
+import ui.model.memo.Photo
+import ui.model.memo.UiState
 
 private const val DELAY_TIME: Long = 1_000
 
@@ -13,7 +18,6 @@ class MemoGameEngine {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
     private var lastRevealedIndex = -1
-
 
     fun onGameStart() {
         initPhotos()

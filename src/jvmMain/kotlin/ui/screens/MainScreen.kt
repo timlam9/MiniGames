@@ -24,13 +24,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import MemoGameEngine
+import games.DealGameEngine
+import games.MemoGameEngine
 
 @Composable
-fun MainScreen(memoGameEngine: MemoGameEngine) {
+fun MainScreen(
+    memoGameEngine: MemoGameEngine,
+    dealGameEngine: DealGameEngine,
+) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
-    val state by memoGameEngine.state.collectAsState()
+    val memoState by memoGameEngine.state.collectAsState()
+    val dealState by dealGameEngine.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -72,9 +77,14 @@ fun MainScreen(memoGameEngine: MemoGameEngine) {
                     )
 
                     GameScreen.MEMO -> MemoGameScreen(
-                        state = state,
+                        state = memoState,
                         onGameStart = memoGameEngine::onGameStart,
                         onCardClick = memoGameEngine::onCardClick,
+                    )
+
+                    GameScreen.DEAL -> DealScreen(
+                        state = dealState,
+                        onItemClick = dealGameEngine::onItemClick
                     )
                 }
             }
@@ -120,6 +130,7 @@ enum class GameScreen(val image: String, val title: String) {
     HOME("tiger.jpg", "Home"),
     IMAGE_PICKER("tiger.jpg", "Image picker"),
     MEMO("ic_memo.png", "Memo"),
+    DEAL("deal.jpeg", "Deal"),
 }
 
 sealed interface GameInfoScreen {

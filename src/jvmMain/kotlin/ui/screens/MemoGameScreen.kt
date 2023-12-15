@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import ui.components.memo.BgPhotoCard
 import ui.components.memo.FlipCard
 import ui.components.memo.PhotoCard
-import ui.model.Photo
-import ui.model.UiState
+import ui.model.memo.Photo
+import ui.model.memo.UiState
 
 @Composable
 fun MemoGameScreen(
