@@ -35,6 +35,7 @@ class MemoGameEngine : GameEngine {
                     status = Photo.Status.CLOSED,
                     name = it.toString(),
                     res = getImagePath(it + 1),
+                    defaultImage = "memo/memo${it + 1}.jpeg",
                 )
             )
         }
@@ -54,6 +55,7 @@ class MemoGameEngine : GameEngine {
                     res = photo.res,
                     status = Photo.Status.CLOSED,
                     name = index.toString(),
+                    defaultImage = photo.defaultImage
                 )
             )
         }

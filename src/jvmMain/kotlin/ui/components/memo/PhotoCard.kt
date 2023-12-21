@@ -24,6 +24,7 @@ import ui.scaledImage
 import ui.model.memo.Photo
 import java.io.File
 
+
 @Composable
 fun PhotoCard(photo: Photo, modifier: Modifier) = with(photo) {
     Card(

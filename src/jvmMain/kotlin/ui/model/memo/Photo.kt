@@ -5,7 +5,7 @@ data class Photo(
     val res: String? = null,
     val status: Status,
     val name: String,
-    val defaultImage: String = "tiger.jpg",
+    val defaultImage: String,
 ) {
 
     enum class Status {
