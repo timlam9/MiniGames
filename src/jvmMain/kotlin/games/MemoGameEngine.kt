@@ -11,7 +11,7 @@ import ui.model.memo.UiState
 
 private const val DELAY_TIME: Long = 1_000
 
-class MemoGameEngine {
+class MemoGameEngine : GameEngine {
 
     private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState())
     val state: StateFlow<UiState> = _state.asStateFlow()

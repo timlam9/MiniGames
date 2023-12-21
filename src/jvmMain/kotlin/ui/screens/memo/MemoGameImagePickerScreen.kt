@@ -1,4 +1,4 @@
-package ui.screens
+package ui.screens.memo
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells

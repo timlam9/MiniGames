@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun BgPhotoCard(
-    id : Int,
+    id: Int,
     modifier: Modifier = Modifier,
     textModifier: Modifier = Modifier,
 ) {

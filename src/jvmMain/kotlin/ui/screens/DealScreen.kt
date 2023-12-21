@@ -12,12 +12,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ui.components.deal.DealCard
+import ui.model.deal.DealItem
 import ui.model.deal.DealState
 
 @Composable
 fun DealScreen(
     state: DealState,
-    onItemClick: (id: Int) -> Unit,
+    onItemClick: (id: String) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -35,7 +36,10 @@ fun DealScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                items(state.list.items.take(3)) { item ->
+                items(
+                    items = state.list.items.filter { it.type == DealItem.Type.BLUE },
+                    key = { item -> item.id },
+                ) { item ->
                     DealCard(
                         title = item.title,
                         color = Color.Blue,
@@ -45,7 +49,10 @@ fun DealScreen(
                 }
             }
             LazyColumn(verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                items(state.list.items.takeLast(3)) { item ->
+                items(
+                    items = state.list.items.filter { it.type == DealItem.Type.RED },
+                    key = { item -> item.id },
+                ) { item ->
                     DealCard(
                         title = item.title,
                         color = Color.Red,

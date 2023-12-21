@@ -3,14 +3,17 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.awt.awtEventOrNull
 import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import games.DealGameEngine
 import games.MemoGameEngine
 import kotlinx.coroutines.delay
-import ui.screens.MainScreen
+import ui.model.deal.DealItem
+import ui.screens.home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
+private var type by mutableStateOf(DealItem.Type.BLUE)
 
 @Composable
 @Preview
@@ -21,7 +24,7 @@ fun App(
     dealGameEngine: DealGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
-        keyEventId?.let { dealGameEngine.onItemClick(it) }
+        keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
         delay(300)
         onKeyEventHandled()
     }
@@ -52,14 +55,19 @@ fun main() = application {
 }
 
 private fun onKeyEvent(keyEvent: KeyEvent): Boolean {
-    keyEventId = when (keyEvent.awtEventOrNull?.keyChar) {
-        '1' -> 0
-        '2' -> 1
-        '3' -> 2
-        '4' -> 3
-        '5' -> 4
-        '6' -> 5
-        else -> null
+    val char = keyEvent.awtEventOrNull?.keyChar
+    keyEventId = try {
+        val id = char?.digitToInt()
+
+        if (keyEvent.isCtrlPressed) {
+            type = DealItem.Type.RED
+            id?.let { it - 1 }
+        } else {
+            type = DealItem.Type.BLUE
+            id?.let { it - 1 }
+        }
+    } catch (e: Exception) {
+        null
     }
     return true
 }

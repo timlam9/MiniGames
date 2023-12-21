@@ -1,4 +1,4 @@
-package ui.screens
+package ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -17,6 +17,8 @@ import ui.model.deal.DealState
 import ui.model.memo.UiState
 import ui.navigation.GameInfoScreen
 import ui.navigation.GameScreen
+import ui.screens.DealScreen
+import ui.screens.memo.MemoGameScreen
 
 @Composable
 fun MainScreen(
@@ -47,14 +49,16 @@ fun MainScreen(
                 title = (gameInfoScreen as GameInfoScreen.Memo).title,
                 content = (gameInfoScreen as GameInfoScreen.Memo).content,
                 image = (gameInfoScreen as GameInfoScreen.Memo).image,
-                onBackClick = { gameInfoScreen = GameInfoScreen.None }
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = memoGameEngine,
             )
 
             is GameInfoScreen.Deal -> GameInfoScreen(
                 title = (gameInfoScreen as GameInfoScreen.Deal).title,
                 content = (gameInfoScreen as GameInfoScreen.Deal).content,
                 image = (gameInfoScreen as GameInfoScreen.Deal).image,
-                onBackClick = { gameInfoScreen = GameInfoScreen.None }
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = dealGameEngine,
             )
 
             GameInfoScreen.None -> {
@@ -101,7 +105,7 @@ private fun GamesNavigation(
 
         GameScreen.DEAL -> DealScreen(
             state = dealState,
-            onItemClick = dealGameEngine::onItemClick
+            onItemClick = dealGameEngine::onItemClick,
         )
     }
 }
