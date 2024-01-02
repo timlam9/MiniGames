@@ -6,11 +6,11 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import games.DealGameEngine
-import games.MemoGameEngine
+import games.deal.DealGameEngine
+import games.memo.MemoGameEngine
 import kotlinx.coroutines.delay
-import ui.model.deal.DealItem
-import ui.screens.home.MainScreen
+import games.deal.model.DealItem
+import games.home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
 private var type by mutableStateOf(DealItem.Type.BLUE)
