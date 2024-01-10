@@ -3,7 +3,11 @@ package games.hangman.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.onClick
+import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +22,33 @@ import androidx.compose.ui.unit.dp
 import games.hangman.model.HangmanState
 import games.hangman.model.Letter
 
+val letters = listOf(
+    Letter(0, 'Α'),
+    Letter(1, 'Β'),
+    Letter(2, 'Γ'),
+    Letter(3, 'Δ'),
+    Letter(4, 'Ε'),
+    Letter(5, 'Ζ'),
+    Letter(6, 'Η'),
+    Letter(7, 'Θ'),
+    Letter(8, 'Ι'),
+    Letter(9, 'Κ'),
+    Letter(10, 'Λ'),
+    Letter(11, 'Μ'),
+    Letter(12, 'Ν'),
+    Letter(13, 'Ξ'),
+    Letter(14, 'Ο'),
+    Letter(15, 'Π'),
+    Letter(16, 'Ρ'),
+    Letter(17, 'Σ'),
+    Letter(18, 'Τ'),
+    Letter(19, 'Υ'),
+    Letter(20, 'Φ'),
+    Letter(21, 'Χ'),
+    Letter(22, 'Ψ'),
+    Letter(23, 'Ω'),
+)
+
 @Composable
 fun HangmanScreen(
     state: HangmanState,
@@ -26,20 +57,60 @@ fun HangmanScreen(
     BoxWithConstraints {
         Row(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
             Hangman(imageHeight = this@BoxWithConstraints.maxHeight / 9)
-            Column(modifier = Modifier.weight(3f).background(color = Color.Red)) {
-                Box(
-                    modifier = Modifier.fillMaxWidth().padding(20.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    Text(
-                        modifier = Modifier,
-                        text = state.hiddenWord.toHangmanWord(),
-                        style = MaterialTheme.typography.h2,
-                        textAlign = TextAlign.Center,
-                    )
+            Column(modifier = Modifier.weight(3f)) {
+                HangmanWord(state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
+                HangmanKeyboard(onAction)
+            }
+        }
+    }
+}
+
+@Composable
+private fun ColumnScope.HangmanKeyboard(onAction: (Letter) -> Unit) {
+    Column(
+        modifier = Modifier.Companion.weight(1f).fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        val rowLetters = letters.chunked(12)
+
+        rowLetters.forEach { row ->
+            Row(
+                modifier = Modifier.weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                row.forEach {
+                    Card(modifier = Modifier.fillMaxSize().weight(1f).clickable { onAction(it) }) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(
+                                modifier = Modifier,
+                                text = it.char.toString(),
+                                style = MaterialTheme.typography.h5,
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun HangmanWord(text: String, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxWidth().padding(20.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            modifier = Modifier,
+            text = text,
+            style = MaterialTheme.typography.h2,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
