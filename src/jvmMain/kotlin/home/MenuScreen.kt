@@ -1,4 +1,4 @@
-package games.home
+package home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ui.navigation.GameScreen
-import games.home.components.MenuGameCard
+import home.components.MenuGameCard
 
 @Composable
 fun MenuScreen(

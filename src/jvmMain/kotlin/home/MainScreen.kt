@@ -1,4 +1,4 @@
-package games.home
+package home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,10 +14,14 @@ import androidx.compose.ui.unit.dp
 import games.deal.DealGameEngine
 import games.memo.MemoGameEngine
 import games.deal.model.DealState
-import games.memo.model.UiState
+import games.memo.model.MemoState
 import ui.navigation.GameInfoScreen
 import ui.navigation.GameScreen
 import games.deal.screens.DealScreen
+import games.hangman.model.HangmanState
+import games.hangman.model.HiddenWord
+import games.hangman.model.Letter
+import games.hangman.screens.HangmanScreen
 import games.memo.screens.MemoGameScreen
 
 @Composable
@@ -80,7 +84,7 @@ fun MainScreen(
 private fun GamesNavigation(
     screen: GameScreen,
     memoGameEngine: MemoGameEngine,
-    memoState: UiState,
+    memoState: MemoState,
     dealState: DealState,
     dealGameEngine: DealGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
@@ -106,6 +110,13 @@ private fun GamesNavigation(
         GameScreen.DEAL -> DealScreen(
             state = dealState,
             onItemClick = dealGameEngine::onItemClick,
+        )
+
+        GameScreen.HANGMAN -> HangmanScreen(
+            state = HangmanState(HiddenWord(listOf(Letter(0, 'f')))),
+            onAction = {
+
+            },
         )
     }
 }
@@ -142,6 +153,7 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.HOME -> GameInfoScreen.None
     GameScreen.MEMO -> GameInfoScreen.Memo()
     GameScreen.DEAL -> GameInfoScreen.Deal()
+    GameScreen.HANGMAN -> GameInfoScreen.None
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {

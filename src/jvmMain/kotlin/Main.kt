@@ -10,7 +10,7 @@ import games.deal.DealGameEngine
 import games.memo.MemoGameEngine
 import kotlinx.coroutines.delay
 import games.deal.model.DealItem
-import games.home.MainScreen
+import home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
 private var type by mutableStateOf(DealItem.Type.BLUE)

@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import ui.getImagePath
 import games.memo.model.Photo
-import games.memo.model.UiState
+import games.memo.model.MemoState
 
 private const val DELAY_TIME: Long = 1_000
 
 class MemoGameEngine : GameEngine {
 
-    private val _state: MutableStateFlow<UiState> = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> = _state.asStateFlow()
+    private val _state: MutableStateFlow<MemoState> = MutableStateFlow(MemoState())
+    val state: StateFlow<MemoState> = _state.asStateFlow()
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
     private var lastRevealedIndex = -1
@@ -65,7 +65,7 @@ class MemoGameEngine : GameEngine {
     }
 
     fun resetGame() {
-        _state.update { UiState() }
+        _state.update { MemoState() }
     }
 
     fun onCardClick(photoId: String) {
@@ -104,7 +104,7 @@ class MemoGameEngine : GameEngine {
 
             if (lastRevealedPhoto.name != name) {
                 scope.launch {
-                    _state.update { it.copy(status = UiState.Status.LOADING) }
+                    _state.update { it.copy(status = MemoState.Status.LOADING) }
                     delay(DELAY_TIME)
 
                     // close cards
@@ -113,11 +113,11 @@ class MemoGameEngine : GameEngine {
 
                     _state.update { it.copy(photos = _state.value.photos.copy(value = updatedListFinal)) }
                     lastRevealedIndex = -1
-                    _state.update { it.copy(status = UiState.Status.PLAYING) }
+                    _state.update { it.copy(status = MemoState.Status.PLAYING) }
                 }
             } else {
                 scope.launch {
-                    _state.update { it.copy(status = UiState.Status.LOADING) }
+                    _state.update { it.copy(status = MemoState.Status.LOADING) }
                     delay(DELAY_TIME)
 
                     // match cards
@@ -126,7 +126,7 @@ class MemoGameEngine : GameEngine {
 
                     _state.update { it.copy(photos = _state.value.photos.copy(value = updatedListFinal)) }
                     lastRevealedIndex = -1
-                    _state.update { it.copy(status = UiState.Status.PLAYING) }
+                    _state.update { it.copy(status = MemoState.Status.PLAYING) }
                 }
             }
         } else {

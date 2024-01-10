@@ -1,6 +1,6 @@
 package games.memo.model
 
-data class UiState(
+data class MemoState(
     val status: Status = Status.PLAYING,
     val photos: Photos = Photos(emptyList()),
 ) {

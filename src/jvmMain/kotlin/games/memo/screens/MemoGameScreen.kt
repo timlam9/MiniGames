@@ -14,11 +14,11 @@ import games.memo.components.BgPhotoCard
 import games.memo.components.FlipCard
 import games.memo.components.PhotoCard
 import games.memo.model.Photo
-import games.memo.model.UiState
+import games.memo.model.MemoState
 
 @Composable
 fun MemoGameScreen(
-    state: UiState,
+    state: MemoState,
     onGameStart: () -> Unit,
     onCardClick: (id: String) -> Unit,
 ) {
@@ -45,7 +45,7 @@ fun MemoGameScreen(
             ) { index, photo ->
                 FlipCard(
                     status = photo.status,
-                    isClickable = state.status == UiState.Status.PLAYING,
+                    isClickable = state.status == MemoState.Status.PLAYING,
                     photoCard = { modifier ->
                         PhotoCard(
                             photo = photo,
