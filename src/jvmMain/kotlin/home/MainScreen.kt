@@ -19,8 +19,6 @@ import ui.navigation.GameInfoScreen
 import ui.navigation.GameScreen
 import games.deal.screens.DealScreen
 import games.hangman.model.HangmanState
-import games.hangman.model.HiddenWord
-import games.hangman.model.Letter
 import games.hangman.screens.HangmanScreen
 import games.memo.screens.MemoGameScreen
 
@@ -113,7 +111,7 @@ private fun GamesNavigation(
         )
 
         GameScreen.HANGMAN -> HangmanScreen(
-            state = HangmanState(HiddenWord(listOf(Letter(0, 'f')))),
+            state = HangmanState(),
             onAction = {
 
             },
