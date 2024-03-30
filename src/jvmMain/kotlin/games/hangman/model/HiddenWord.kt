@@ -15,4 +15,8 @@ data class HiddenWord(
             it.toString()
         }
     }
+
+    fun revealed(): HiddenWord {
+        return HiddenWord(letters = letters.map { it.copy(state = Letter.State.SELECTED) })
+    }
 }

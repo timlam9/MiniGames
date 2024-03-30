@@ -19,39 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import games.hangman.components.PasswordTextField
 import games.hangman.model.HangmanState
 import games.hangman.model.Letter
-
-private val keyLetters = listOf(
-    Letter(0, 'Α'),
-    Letter(1, 'Β'),
-    Letter(2, 'Γ'),
-    Letter(3, 'Δ'),
-    Letter(4, 'Ε'),
-    Letter(5, 'Ζ'),
-    Letter(6, 'Η'),
-    Letter(7, 'Θ'),
-    Letter(8, 'Ι'),
-    Letter(9, 'Κ'),
-    Letter(10, 'Λ'),
-    Letter(11, 'Μ'),
-    Letter(12, 'Ν'),
-    Letter(13, 'Ξ'),
-    Letter(14, 'Ο'),
-    Letter(15, 'Π'),
-    Letter(16, 'Ρ'),
-    Letter(17, 'Σ'),
-    Letter(18, 'Τ'),
-    Letter(19, 'Υ'),
-    Letter(20, 'Φ'),
-    Letter(21, 'Χ'),
-    Letter(22, 'Ψ'),
-    Letter(23, 'Ω'),
-)
 
 @Composable
 fun HangmanScreen(
@@ -67,14 +43,15 @@ fun HangmanScreen(
             )
             AnimatedVisibility(state.isGameOver) {
                 GameOverScreen(
+                    hiddenWord = state.previousHiddenWord.toHangmanWord(),
                     modifier = Modifier.fillMaxSize().weight(3f),
                     onPlayAgainClick = onPlayAgainClick,
                 )
             }
             AnimatedVisibility(!state.isGameOver) {
                 Column(modifier = Modifier.weight(3f)) {
-                    HangmanWord(state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
-                    HangmanKeyboard(onAction)
+                    HangmanWord(text = state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
+                    HangmanKeyboard(state.keyLetters, onAction)
                 }
             }
         }
@@ -84,27 +61,37 @@ fun HangmanScreen(
 @Composable
 private fun GameOverScreen(
     modifier: Modifier = Modifier,
+    hiddenWord: String,
     onPlayAgainClick: (String) -> Unit,
 ) {
     var hiddenWordString by rememberSaveable { mutableStateOf("") }
+
+    val hiddenWordText = buildAnnotatedString {
+        append("Hidden word: ")
+        withStyle(style = SpanStyle(color = MaterialTheme.colors.primary)) {
+            append(hiddenWord)
+        }
+    }
 
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Text("Game Over")
-        Spacer(modifier = Modifier.height(40.dp))
+        Text(text = "Game Over", style = MaterialTheme.typography.h2)
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = hiddenWordText, style = MaterialTheme.typography.h4)
+        Spacer(modifier = Modifier.height(60.dp))
         PasswordTextField(text = hiddenWordString) { hiddenWordString = it }
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = { onPlayAgainClick(hiddenWordString) }) {
-            Text("Play again")
+            Text(text = "Play again")
         }
     }
 }
 
 @Composable
-private fun ColumnScope.HangmanKeyboard(onAction: (Letter) -> Unit) {
+private fun ColumnScope.HangmanKeyboard(keyLetters: List<Letter>, onAction: (Letter) -> Unit) {
     Column(
         modifier = Modifier.Companion.weight(1f).fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
@@ -118,7 +105,15 @@ private fun ColumnScope.HangmanKeyboard(onAction: (Letter) -> Unit) {
                 horizontalArrangement = Arrangement.Center,
             ) {
                 row.forEach {
-                    Card(modifier = Modifier.fillMaxSize().weight(1f).clickable { onAction(it) }) {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                            .clickable(enabled = it.state == Letter.State.UNSELECTED) {
+                                onAction(it)
+                            },
+                        backgroundColor = if (it.state == Letter.State.UNSELECTED) Color.White else Color.Black,
+                    ) {
                         Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center,
