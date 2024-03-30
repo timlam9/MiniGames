@@ -12,16 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import games.deal.DealGameEngine
-import games.memo.MemoGameEngine
-import games.deal.model.DealState
-import games.memo.model.MemoState
-import ui.navigation.GameInfoScreen
-import ui.navigation.GameScreen
 import games.deal.screens.DealScreen
 import games.hangman.HangmanGameEngine
-import games.hangman.model.HangmanState
 import games.hangman.screens.HangmanScreen
+import games.memo.MemoGameEngine
 import games.memo.screens.MemoGameScreen
+import ui.navigation.GameInfoScreen
+import ui.navigation.GameScreen
 
 @Composable
 fun MainScreen(
@@ -115,6 +112,7 @@ private fun GamesNavigation(
         GameScreen.HANGMAN -> HangmanScreen(
             state = hangmanState,
             onAction = hangmanGameEngine::onKeyClick,
+            onPlayAgainClick = hangmanGameEngine::onPlayAgainClick,
         )
     }
 }

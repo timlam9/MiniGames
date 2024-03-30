@@ -5,10 +5,15 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,10 +22,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import games.hangman.components.PasswordTextField
 import games.hangman.model.HangmanState
 import games.hangman.model.Letter
 
-val letters = listOf(
+private val keyLetters = listOf(
     Letter(0, 'Α'),
     Letter(1, 'Β'),
     Letter(2, 'Γ'),
@@ -51,6 +57,7 @@ val letters = listOf(
 fun HangmanScreen(
     state: HangmanState,
     onAction: (Letter) -> Unit,
+    onPlayAgainClick: (String) -> Unit,
 ) {
     BoxWithConstraints {
         Row(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
@@ -58,10 +65,40 @@ fun HangmanScreen(
                 wrongTries = state.wrongTries,
                 imageHeight = this@BoxWithConstraints.maxHeight / 9,
             )
-            Column(modifier = Modifier.weight(3f)) {
-                HangmanWord(state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
-                HangmanKeyboard(onAction)
+            AnimatedVisibility(state.isGameOver) {
+                GameOverScreen(
+                    modifier = Modifier.fillMaxSize().weight(3f),
+                    onPlayAgainClick = onPlayAgainClick,
+                )
             }
+            AnimatedVisibility(!state.isGameOver) {
+                Column(modifier = Modifier.weight(3f)) {
+                    HangmanWord(state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
+                    HangmanKeyboard(onAction)
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun GameOverScreen(
+    modifier: Modifier = Modifier,
+    onPlayAgainClick: (String) -> Unit,
+) {
+    var hiddenWordString by rememberSaveable { mutableStateOf("") }
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text("Game Over")
+        Spacer(modifier = Modifier.height(40.dp))
+        PasswordTextField(text = hiddenWordString) { hiddenWordString = it }
+        Spacer(modifier = Modifier.height(20.dp))
+        Button(onClick = { onPlayAgainClick(hiddenWordString) }) {
+            Text("Play again")
         }
     }
 }
@@ -72,7 +109,7 @@ private fun ColumnScope.HangmanKeyboard(onAction: (Letter) -> Unit) {
         modifier = Modifier.Companion.weight(1f).fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
-        val rowLetters = letters.chunked(12)
+        val rowLetters = keyLetters.chunked(12)
 
         rowLetters.forEach { row ->
             Row(
@@ -204,7 +241,7 @@ private fun Hangman(
                 )
             }
         }
-        AnimatedVisibility(wrongTries >= 7) {
+        AnimatedVisibility(wrongTries >= 8) {
             HangmanImage(
                 imageRes = "fire.png",
                 imageHeight = imageHeight * 2,
@@ -214,7 +251,7 @@ private fun Hangman(
                 contentScale = ContentScale.Crop,
             )
         }
-        AnimatedVisibility(wrongTries >= 8) {
+        AnimatedVisibility(wrongTries >= 7) {
             HangmanImage(
                 imageRes = "firewood.png",
                 imageHeight = imageHeight,

@@ -1,7 +1,7 @@
 package games.hangman.model
 
 data class HiddenWord(
-    val letters: List<Letter>
+    val letters: List<Letter> = emptyList()
 ) {
 
     fun toHangmanWord(): String {

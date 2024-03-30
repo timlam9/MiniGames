@@ -2,6 +2,7 @@ package games.hangman
 
 import GameEngine
 import games.hangman.model.HangmanState
+import games.hangman.model.HiddenWord
 import games.hangman.model.Letter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,10 +28,34 @@ class HangmanGameEngine : GameEngine {
             }
             val updatedWrongTries = if (isLetterWrong) it.wrongTries + 1 else it.wrongTries
 
-            it.copy(
+            val updatedState = it.copy(
                 hiddenWord = it.hiddenWord.copy(letters = updatedLetters),
                 wrongTries = updatedWrongTries,
             )
+
+            updatedState.isGameOver()
+
+            updatedState
         }
+    }
+
+    fun onPlayAgainClick(hiddenWordString: String) {
+        val hiddenWord = HiddenWord(
+            hiddenWordString.toList().mapIndexed { index, char ->
+                Letter(index, char)
+            }
+        )
+        _state.update {
+            it.copy(
+                hiddenWord = hiddenWord,
+                wrongTries = 0,
+                isGameOver = false,
+            )
+        }
+    }
+
+    private fun HangmanState.isGameOver() {
+        val isGameOver = wrongTries == 8 || hiddenWord.letters.all { it.state == Letter.State.SELECTED }
+        if (isGameOver) _state.update { it.copy(isGameOver = true) } else _state
     }
 }
