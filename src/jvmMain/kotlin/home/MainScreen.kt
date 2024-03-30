@@ -18,6 +18,7 @@ import games.memo.model.MemoState
 import ui.navigation.GameInfoScreen
 import ui.navigation.GameScreen
 import games.deal.screens.DealScreen
+import games.hangman.HangmanGameEngine
 import games.hangman.model.HangmanState
 import games.hangman.screens.HangmanScreen
 import games.memo.screens.MemoGameScreen
@@ -26,11 +27,10 @@ import games.memo.screens.MemoGameScreen
 fun MainScreen(
     memoGameEngine: MemoGameEngine,
     dealGameEngine: DealGameEngine,
+    hangmanGameEngine: HangmanGameEngine,
 ) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
-    val memoState by memoGameEngine.state.collectAsState()
-    val dealState by dealGameEngine.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -67,9 +67,8 @@ fun MainScreen(
                 GamesNavigation(
                     screen = screen,
                     memoGameEngine = memoGameEngine,
-                    memoState = memoState,
-                    dealState = dealState,
                     dealGameEngine = dealGameEngine,
+                    hangmanGameEngine = hangmanGameEngine,
                     onGameCardClick = { screen = it },
                     onInfoIconClick = { gameInfoScreen = it },
                 )
@@ -82,12 +81,15 @@ fun MainScreen(
 private fun GamesNavigation(
     screen: GameScreen,
     memoGameEngine: MemoGameEngine,
-    memoState: MemoState,
-    dealState: DealState,
     dealGameEngine: DealGameEngine,
+    hangmanGameEngine: HangmanGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
     onInfoIconClick: (GameInfoScreen) -> Unit,
 ) {
+    val memostate by memoGameEngine.state.collectAsState()
+    val dealState by dealGameEngine.state.collectAsState()
+    val hangmanState by hangmanGameEngine.state.collectAsState()
+
     when (screen) {
         GameScreen.HOME -> {
             val games = GameScreen.values().toList().filterValidMenuItems()
@@ -100,7 +102,7 @@ private fun GamesNavigation(
         }
 
         GameScreen.MEMO -> MemoGameScreen(
-            state = memoState,
+            state = memostate,
             onGameStart = memoGameEngine::onGameStart,
             onCardClick = memoGameEngine::onCardClick,
         )
@@ -111,10 +113,8 @@ private fun GamesNavigation(
         )
 
         GameScreen.HANGMAN -> HangmanScreen(
-            state = HangmanState(),
-            onAction = {
-
-            },
+            state = hangmanState,
+            onAction = hangmanGameEngine::onKeyClick,
         )
     }
 }

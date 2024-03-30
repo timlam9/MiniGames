@@ -5,8 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.onClick
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -56,7 +54,10 @@ fun HangmanScreen(
 ) {
     BoxWithConstraints {
         Row(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
-            Hangman(imageHeight = this@BoxWithConstraints.maxHeight / 9)
+            Hangman(
+                wrongTries = state.wrongTries,
+                imageHeight = this@BoxWithConstraints.maxHeight / 9,
+            )
             Column(modifier = Modifier.weight(3f)) {
                 HangmanWord(state.hiddenWord.toHangmanWord(), modifier = Modifier.weight(2f))
                 HangmanKeyboard(onAction)
@@ -115,7 +116,10 @@ private fun HangmanWord(text: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun Hangman(imageHeight: Dp) {
+private fun Hangman(
+    wrongTries: Int,
+    imageHeight: Dp,
+) {
     Column(
         modifier = Modifier
             .width(imageHeight * 4)
@@ -129,12 +133,14 @@ private fun Hangman(imageHeight: Dp) {
             imageHeight = imageHeight,
             visible = true,
         )
-        HangmanImage(
-            imageRes = "head.png",
-            imageHeight = imageHeight,
-            visible = true,
-            yOffset = imageHeight / 2,
-        )
+        AnimatedVisibility(wrongTries >= 1) {
+            HangmanImage(
+                imageRes = "head.png",
+                imageHeight = imageHeight,
+                visible = true,
+                yOffset = imageHeight / 2,
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -142,72 +148,86 @@ private fun Hangman(imageHeight: Dp) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
+            AnimatedVisibility(wrongTries >= 3) {
+                HangmanImage(
+                    imageRes = "right_arm.png",
+                    imageHeight = imageHeight * 2,
+                    imageWidth = imageHeight,
+                    visible = true,
+                    xOffset = imageHeight / 2 - 10.dp,
+                    yOffset = imageHeight / 2 - 10.dp,
+                )
+            }
+            AnimatedVisibility(wrongTries >= 2) {
+                HangmanImage(
+                    imageRes = "body.png",
+                    imageHeight = imageHeight * 2,
+                    imageWidth = imageHeight * 2,
+                    visible = true,
+                    yOffset = imageHeight / 2,
+                )
+            }
+            AnimatedVisibility(wrongTries >= 4) {
+                HangmanImage(
+                    imageRes = "left_arm.png",
+                    imageHeight = imageHeight * 2,
+                    imageWidth = imageHeight,
+                    visible = true,
+                    xOffset = -imageHeight / 2 + 10.dp,
+                    yOffset = imageHeight / 2 - 10.dp,
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(imageHeight * 2),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            AnimatedVisibility(wrongTries >= 5) {
+                HangmanImage(
+                    imageRes = "right_leg.png",
+                    imageHeight = imageHeight * 2,
+                    visible = true,
+                    xOffset = imageHeight / 2,
+                    yOffset = imageHeight / 2 + 10.dp,
+                )
+            }
+            AnimatedVisibility(wrongTries >= 6) {
+                HangmanImage(
+                    imageRes = "right_leg.png",
+                    imageHeight = imageHeight * 2,
+                    visible = true,
+                    xOffset = -imageHeight / 2,
+                    yOffset = imageHeight / 2 + 10.dp,
+                )
+            }
+        }
+        AnimatedVisibility(wrongTries >= 7) {
             HangmanImage(
-                imageRes = "right_arm.png",
-                imageHeight = imageHeight * 2,
-                imageWidth = imageHeight,
-                visible = true,
-                xOffset = imageHeight / 2 - 10.dp,
-                yOffset = imageHeight / 2 - 10.dp,
-            )
-            HangmanImage(
-                imageRes = "body.png",
+                imageRes = "fire.png",
                 imageHeight = imageHeight * 2,
                 imageWidth = imageHeight * 2,
                 visible = true,
                 yOffset = imageHeight / 2,
-            )
-            HangmanImage(
-                imageRes = "left_arm.png",
-                imageHeight = imageHeight * 2,
-                imageWidth = imageHeight,
-                visible = true,
-                xOffset = -imageHeight / 2 + 10.dp,
-                yOffset = imageHeight / 2 - 10.dp,
+                contentScale = ContentScale.Crop,
             )
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(imageHeight * 2),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
+        AnimatedVisibility(wrongTries >= 8) {
             HangmanImage(
-                imageRes = "right_leg.png",
-                imageHeight = imageHeight * 2,
+                imageRes = "firewood.png",
+                imageHeight = imageHeight,
+                imageWidth = imageHeight * 2,
                 visible = true,
-                xOffset = imageHeight / 2,
-                yOffset = imageHeight / 2 + 10.dp,
-            )
-            HangmanImage(
-                imageRes = "right_leg.png",
-                imageHeight = imageHeight * 2,
-                visible = true,
-                xOffset = -imageHeight / 2,
-                yOffset = imageHeight / 2 + 10.dp,
+                yOffset = imageHeight,
             )
         }
-        HangmanImage(
-            imageRes = "fire.png",
-            imageHeight = imageHeight * 2,
-            imageWidth = imageHeight * 2,
-            visible = true,
-            yOffset = imageHeight / 2,
-            contentScale = ContentScale.Crop,
-        )
-        HangmanImage(
-            imageRes = "firewood.png",
-            imageHeight = imageHeight,
-            imageWidth = imageHeight * 2,
-            visible = true,
-            yOffset = imageHeight,
-        )
     }
 }
 
 @Composable
-fun HangmanImage(
+private fun HangmanImage(
     imageRes: String,
     imageHeight: Dp,
     imageWidth: Dp = imageHeight,
