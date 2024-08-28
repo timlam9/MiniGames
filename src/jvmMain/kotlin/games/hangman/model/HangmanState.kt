@@ -3,12 +3,12 @@ package games.hangman.model
 data class HangmanState(
     val hiddenWord: HiddenWord = HiddenWord(),
     val previousHiddenWord: HiddenWord = HiddenWord(),
-    val keyLetters: List<Letter> = keyLetters(),
+    val keyLetters: List<Letter> = greekKeyLetters(),
     val wrongTries: Int = 0,
     val isGameOver: Boolean = true,
 )
 
-internal fun keyLetters(): List<Letter> = listOf(
+internal fun greekKeyLetters(): List<Letter> = listOf(
     Letter(0, 'Α'),
     Letter(1, 'Β'),
     Letter(2, 'Γ'),
@@ -33,4 +33,33 @@ internal fun keyLetters(): List<Letter> = listOf(
     Letter(21, 'Χ'),
     Letter(22, 'Ψ'),
     Letter(23, 'Ω'),
+)
+
+internal fun englishKeyLetters(): List<Letter> = listOf(
+    Letter(0, 'A'),
+    Letter(1, 'B'),
+    Letter(2, 'C'),
+    Letter(3, 'D'),
+    Letter(4, 'E'),
+    Letter(5, 'F'),
+    Letter(6, 'G'),
+    Letter(7, 'H'),
+    Letter(8, 'I'),
+    Letter(9, 'J'),
+    Letter(10, 'K'),
+    Letter(11, 'L'),
+    Letter(12, 'M'),
+    Letter(13, 'N'),
+    Letter(14, 'O'),
+    Letter(15, 'P'),
+    Letter(16, 'Q'),
+    Letter(17, 'R'),
+    Letter(18, 'S'),
+    Letter(19, 'T'),
+    Letter(20, 'U'),
+    Letter(21, 'V'),
+    Letter(22, 'W'),
+    Letter(23, 'X'),
+    Letter(24, 'Y'),
+    Letter(25, 'Z'),
 )

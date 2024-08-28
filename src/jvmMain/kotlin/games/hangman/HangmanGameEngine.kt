@@ -1,10 +1,8 @@
 package games.hangman
 
 import GameEngine
-import games.hangman.model.HangmanState
-import games.hangman.model.HiddenWord
-import games.hangman.model.Letter
-import games.hangman.model.keyLetters
+import games.hangman.model.*
+import games.hangman.model.englishKeyLetters
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -54,17 +52,27 @@ class HangmanGameEngine : GameEngine {
     }
 
     fun onPlayAgainClick(hiddenWordString: String) {
+        if (hiddenWordString.isBlank()) return
+
         val hiddenWord = HiddenWord(
-            hiddenWordString.toList().mapIndexed { index, char ->
+            hiddenWordString.trim().toList().mapIndexed { index, char ->
                 Letter(index, char, state = if (char == ' ') Letter.State.SELECTED else Letter.State.UNSELECTED)
             }
         )
+
+        val isFirstLetterEnglish = englishKeyLetters().any {
+            it.char.equals(
+                other = hiddenWord.letters.first().char,
+                ignoreCase = true
+            )
+        }
+
         _state.update {
             it.copy(
                 hiddenWord = hiddenWord,
                 wrongTries = 0,
                 isGameOver = false,
-                keyLetters = keyLetters()
+                keyLetters = if (isFirstLetterEnglish) englishKeyLetters() else greekKeyLetters()
             )
         }
     }
