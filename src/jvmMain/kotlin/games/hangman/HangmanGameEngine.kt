@@ -23,7 +23,7 @@ class HangmanGameEngine : GameEngine {
             var isLetterWrong = true
 
             val updatedLetters = it.hiddenWord.letters.map { letter ->
-                if (letter.char == keyLetter.char) {
+                if (letter.char.equals(keyLetter.char, ignoreCase = true)) {
                     isLetterWrong = false
                     letter.copy(state = Letter.State.SELECTED)
                 } else {
@@ -32,7 +32,7 @@ class HangmanGameEngine : GameEngine {
             }
 
             val updatedKeyLetters = it.keyLetters.map { letter ->
-                if (letter.char == keyLetter.char) {
+                if (letter.char.equals(keyLetter.char, ignoreCase = true)) {
                     letter.copy(state = Letter.State.SELECTED)
                 } else {
                     letter
