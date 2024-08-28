@@ -56,7 +56,7 @@ class HangmanGameEngine : GameEngine {
     fun onPlayAgainClick(hiddenWordString: String) {
         val hiddenWord = HiddenWord(
             hiddenWordString.toList().mapIndexed { index, char ->
-                Letter(index, char, state = if (char == '-') Letter.State.SELECTED else Letter.State.UNSELECTED)
+                Letter(index, char, state = if (char == ' ') Letter.State.SELECTED else Letter.State.UNSELECTED)
             }
         )
         _state.update {

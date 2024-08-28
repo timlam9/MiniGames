@@ -7,7 +7,6 @@ data class HiddenWord(
     fun toHangmanWord(): String {
         return letters.map {
             when {
-                it.char == '-' -> ' '
                 it.state == Letter.State.SELECTED -> it.char
                 else -> '_'
             }
