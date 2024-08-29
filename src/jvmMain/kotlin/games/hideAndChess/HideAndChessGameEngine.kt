@@ -10,12 +10,15 @@ import kotlinx.coroutines.flow.update
 class HideAndChessGameEngine : GameEngine {
 
     private val _state: MutableStateFlow<HideAndChessState> = MutableStateFlow(
-        HideAndChessState(board = HideAndChessBoard(value = decodeBoard(InitialEncodedBoard)))
+        HideAndChessState(
+            board = HideAndChessBoard(value = decodeBoard(InitialEncodedBoard)),
+            shouldReveal = false,
+        )
     )
     val state: StateFlow<HideAndChessState> = _state.asStateFlow()
 
     fun onCellClick(cell: HideAndChessCell) {
-        val newMark = when(cell.mark) {
+        val newMark = when (cell.mark) {
             HideAndChessCell.Mark.NONE -> HideAndChessCell.Mark.X
             HideAndChessCell.Mark.X -> HideAndChessCell.Mark.TIC
             HideAndChessCell.Mark.TIC -> HideAndChessCell.Mark.NONE
@@ -32,6 +35,23 @@ class HideAndChessGameEngine : GameEngine {
                         }
                     }
                 )
+            )
+        }
+    }
+
+    fun onRevealClick() {
+        _state.update { currentState ->
+            currentState.copy(
+                shouldReveal = !currentState.shouldReveal
+            )
+        }
+    }
+
+    fun onResetClick() {
+        _state.update { currentState ->
+            currentState.copy(
+                board = HideAndChessBoard(value = decodeBoard(InitialEncodedBoard)),
+                shouldReveal = false,
             )
         }
     }

@@ -124,6 +124,8 @@ private fun GamesNavigation(
         GameScreen.HIDE_AND_CHESS -> HideAndChessScreen(
             state = hideAndChessState,
             onCellClick = hideAndChessGameEngine::onCellClick,
+            onRevealClick = hideAndChessGameEngine::onRevealClick,
+            onResetClick = hideAndChessGameEngine::onResetClick,
         )
     }
 }

@@ -26,7 +26,7 @@ fun HNCCell(
     color: HideAndChessCell.Color,
     type: HideAndChessCell.Type,
     mark: HideAndChessCell.Mark,
-    isGameOver: Boolean = false,
+    shouldReveal: Boolean,
     borders: Set<HideAndChessCell.Border>,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -94,7 +94,7 @@ fun HNCCell(
                 }
             },
     ) {
-        AnimatedVisibility(isGameOver) {
+        AnimatedVisibility(shouldReveal) {
             typeIcon?.let {
                 Image(
                     painter = painterResource(it),
@@ -102,7 +102,7 @@ fun HNCCell(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(10.dp),
+                        .padding(16.dp),
                 )
             }
         }

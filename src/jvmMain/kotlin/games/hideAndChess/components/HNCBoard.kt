@@ -15,6 +15,7 @@ import games.hideAndChess.model.HideAndChessCell
 @Composable
 fun HNCBoard(
     board: HideAndChessBoard,
+    shouldReveal: Boolean,
     onCellClick: (HideAndChessCell) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -46,6 +47,7 @@ fun HNCBoard(
                                 mark = mark,
                                 onClick = { onCellClick(this) },
                                 borders = getBorders(board),
+                                shouldReveal = shouldReveal,
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxHeight(),
