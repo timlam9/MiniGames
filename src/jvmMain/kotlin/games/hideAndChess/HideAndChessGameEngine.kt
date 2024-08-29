@@ -25,19 +25,21 @@ class HideAndChessGameEngine : GameEngine {
         }
 
         _state.update { currentState ->
+            val newBoard = currentState.board.copy(
+                value = currentState.board.value.map { currentCell ->
+                    if (cell == currentCell) currentCell.copy(mark = newMark) else currentCell
+                }
+            )
             currentState.copy(
-                board = currentState.board.copy(
-                    value = currentState.board.value.map { currentCell ->
-                        if (cell == currentCell) {
-                            currentCell.copy(mark = newMark)
-                        } else {
-                            currentCell
-                        }
-                    }
-                )
+                board = newBoard,
+                shouldReveal = newBoard.hasWon()
             )
         }
     }
+
+    private fun HideAndChessBoard.hasWon() =
+        value.filter { it.type == HideAndChessCell.Type.KING && it.mark == HideAndChessCell.Mark.TIC }.size == 10
+
 
     fun onRevealClick() {
         _state.update { currentState ->
