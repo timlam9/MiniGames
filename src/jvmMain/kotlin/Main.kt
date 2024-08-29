@@ -11,6 +11,7 @@ import games.memo.MemoGameEngine
 import kotlinx.coroutines.delay
 import games.deal.model.DealItem
 import games.hangman.HangmanGameEngine
+import games.hideAndChess.HideAndChessGameEngine
 import home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
@@ -24,6 +25,7 @@ fun App(
     memoGameEngine: MemoGameEngine,
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
+    hideAndChessGameEngine: HideAndChessGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
         keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
@@ -35,6 +37,7 @@ fun App(
             memoGameEngine = memoGameEngine,
             dealGameEngine = dealGameEngine,
             hangmanGameEngine = hangmanGameEngine,
+            hideAndChessGameEngine = hideAndChessGameEngine,
         )
     }
 }
@@ -43,6 +46,7 @@ fun main() = application {
     val memoGameEngine = MemoGameEngine()
     val dealGameEngine = DealGameEngine()
     val hangmanGameEngine = HangmanGameEngine()
+    val hideAndChessGameEngine = HideAndChessGameEngine()
 
     Window(
         onKeyEvent = { keyEvent ->
@@ -56,6 +60,7 @@ fun main() = application {
             memoGameEngine = memoGameEngine,
             dealGameEngine = dealGameEngine,
             hangmanGameEngine = hangmanGameEngine,
+            hideAndChessGameEngine = hideAndChessGameEngine,
         )
     }
 }

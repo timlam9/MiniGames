@@ -6,4 +6,5 @@ enum class GameScreen(val image: String, val title: String) {
     MEMO("ic_memo.png", "Memo"),
     DEAL("deal.jpeg", "Deal"),
     HANGMAN("hangman.jpeg", "Hangman"),
+    HIDE_AND_CHESS("hangman.jpeg", "Hide And Chess"),
 }

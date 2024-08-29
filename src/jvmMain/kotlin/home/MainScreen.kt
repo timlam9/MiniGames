@@ -15,6 +15,8 @@ import games.deal.DealGameEngine
 import games.deal.screens.DealScreen
 import games.hangman.HangmanGameEngine
 import games.hangman.screens.HangmanScreen
+import games.hideAndChess.HideAndChessGameEngine
+import games.hideAndChess.screens.HideAndChessScreen
 import games.memo.MemoGameEngine
 import games.memo.screens.MemoGameScreen
 import ui.navigation.GameInfoScreen
@@ -25,6 +27,7 @@ fun MainScreen(
     memoGameEngine: MemoGameEngine,
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
+    hideAndChessGameEngine: HideAndChessGameEngine,
 ) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
@@ -66,6 +69,7 @@ fun MainScreen(
                     memoGameEngine = memoGameEngine,
                     dealGameEngine = dealGameEngine,
                     hangmanGameEngine = hangmanGameEngine,
+                    hideAndChessGameEngine = hideAndChessGameEngine,
                     onGameCardClick = { screen = it },
                     onInfoIconClick = { gameInfoScreen = it },
                 )
@@ -80,12 +84,14 @@ private fun GamesNavigation(
     memoGameEngine: MemoGameEngine,
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
+    hideAndChessGameEngine: HideAndChessGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
     onInfoIconClick: (GameInfoScreen) -> Unit,
 ) {
     val memostate by memoGameEngine.state.collectAsState()
     val dealState by dealGameEngine.state.collectAsState()
     val hangmanState by hangmanGameEngine.state.collectAsState()
+    val hideAndChessState by hideAndChessGameEngine.state.collectAsState()
 
     when (screen) {
         GameScreen.HOME -> {
@@ -113,6 +119,11 @@ private fun GamesNavigation(
             state = hangmanState,
             onAction = hangmanGameEngine::onKeyClick,
             onPlayAgainClick = hangmanGameEngine::onPlayAgainClick,
+        )
+
+        GameScreen.HIDE_AND_CHESS -> HideAndChessScreen(
+            state = hideAndChessState,
+            onCellClick = hideAndChessGameEngine::onCellClick,
         )
     }
 }
@@ -150,6 +161,7 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.MEMO -> GameInfoScreen.Memo()
     GameScreen.DEAL -> GameInfoScreen.Deal()
     GameScreen.HANGMAN -> GameInfoScreen.None
+    GameScreen.HIDE_AND_CHESS -> GameInfoScreen.None
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {
