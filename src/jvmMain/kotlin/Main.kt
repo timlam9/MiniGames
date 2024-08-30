@@ -10,6 +10,7 @@ import games.deal.DealGameEngine
 import games.memo.MemoGameEngine
 import kotlinx.coroutines.delay
 import games.deal.model.DealItem
+import games.findTheStar.FindTheStarGameEngine
 import games.hangman.HangmanGameEngine
 import games.hideAndChess.HideAndChessGameEngine
 import home.MainScreen
@@ -26,6 +27,7 @@ fun App(
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
+    findTheStarGameEngine: FindTheStarGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
         keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
@@ -38,6 +40,7 @@ fun App(
             dealGameEngine = dealGameEngine,
             hangmanGameEngine = hangmanGameEngine,
             hideAndChessGameEngine = hideAndChessGameEngine,
+            findTheStarGameEngine = findTheStarGameEngine,
         )
     }
 }
@@ -47,6 +50,7 @@ fun main() = application {
     val dealGameEngine = DealGameEngine()
     val hangmanGameEngine = HangmanGameEngine()
     val hideAndChessGameEngine = HideAndChessGameEngine()
+    val findTheStarGameEngine = FindTheStarGameEngine()
 
     Window(
         onKeyEvent = { keyEvent ->
@@ -61,6 +65,7 @@ fun main() = application {
             dealGameEngine = dealGameEngine,
             hangmanGameEngine = hangmanGameEngine,
             hideAndChessGameEngine = hideAndChessGameEngine,
+            findTheStarGameEngine = findTheStarGameEngine,
         )
     }
 }

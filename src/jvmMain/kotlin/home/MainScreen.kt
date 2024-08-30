@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import games.deal.DealGameEngine
 import games.deal.screens.DealScreen
+import games.findTheStar.FindTheStarGameEngine
+import games.findTheStar.screens.FindTheStarScreen
 import games.hangman.HangmanGameEngine
 import games.hangman.screens.HangmanScreen
 import games.hideAndChess.HideAndChessGameEngine
@@ -28,6 +30,7 @@ fun MainScreen(
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
+    findTheStarGameEngine: FindTheStarGameEngine,
 ) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
@@ -70,6 +73,7 @@ fun MainScreen(
                     dealGameEngine = dealGameEngine,
                     hangmanGameEngine = hangmanGameEngine,
                     hideAndChessGameEngine = hideAndChessGameEngine,
+                    findTheStarGameEngine = findTheStarGameEngine,
                     onGameCardClick = { screen = it },
                     onInfoIconClick = { gameInfoScreen = it },
                 )
@@ -85,6 +89,7 @@ private fun GamesNavigation(
     dealGameEngine: DealGameEngine,
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
+    findTheStarGameEngine: FindTheStarGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
     onInfoIconClick: (GameInfoScreen) -> Unit,
 ) {
@@ -92,6 +97,7 @@ private fun GamesNavigation(
     val dealState by dealGameEngine.state.collectAsState()
     val hangmanState by hangmanGameEngine.state.collectAsState()
     val hideAndChessState by hideAndChessGameEngine.state.collectAsState()
+    val findTheStarState by findTheStarGameEngine.state.collectAsState()
 
     when (screen) {
         GameScreen.HOME -> {
@@ -128,6 +134,13 @@ private fun GamesNavigation(
             onRandomChessPieceRevealClick = hideAndChessGameEngine::onRandomChessPieceRevealClick,
             onRandomXMarkRevealClick = hideAndChessGameEngine::onRandomXMarkRevealClick,
             onResetClick = hideAndChessGameEngine::onResetClick,
+        )
+
+        GameScreen.FIND_THE_STAR -> FindTheStarScreen(
+            state = findTheStarState,
+            onCellClick = findTheStarGameEngine::onCellClick,
+            onPlayAgainClick = findTheStarGameEngine::onPlayAgainClick,
+            onRevealBoardClick = findTheStarGameEngine::onRevealBoardClick,
         )
     }
 }
@@ -166,6 +179,7 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.DEAL -> GameInfoScreen.Deal()
     GameScreen.HANGMAN -> GameInfoScreen.None
     GameScreen.HIDE_AND_CHESS -> GameInfoScreen.None
+    GameScreen.FIND_THE_STAR -> GameInfoScreen.None
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {

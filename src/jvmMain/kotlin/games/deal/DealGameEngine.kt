@@ -37,10 +37,7 @@ class DealGameEngine : GameEngine {
     fun onAddClick(item: DealItem) {
         _state.update { currentState ->
             val currentList = currentState.list.items.toMutableList()
-
-            println("Remove: $currentList")
             currentList.add(item)
-
             currentState.copy(list = DealList(currentList))
         }
     }
@@ -49,9 +46,6 @@ class DealGameEngine : GameEngine {
         _state.update { currentState ->
             val newList = currentState.list.items.toMutableList()
             newList.removeIf { it.id == id }
-
-            println("Remove: $newList")
-
             currentState.copy(list = DealList(newList))
         }
     }
