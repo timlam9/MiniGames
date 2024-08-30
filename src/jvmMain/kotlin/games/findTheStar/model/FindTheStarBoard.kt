@@ -58,10 +58,10 @@ fun generateRandomBoard(): FindTheStarBoard {
             else -> cell
         }
     }
-    var sunCell = boardWithPlanets.first()
+    val sunCell = boardWithPlanets.first()
     var boardWithDirections = boardWithPlanets
 
-    repeat(50) {
+    repeat(32) {
         val directionCell = boardWithDirections
             .filter { it.type == FindTheStarCell.Type.EmptySpace }
             .random()
