@@ -125,6 +125,8 @@ private fun GamesNavigation(
             state = hideAndChessState,
             onCellClick = hideAndChessGameEngine::onCellClick,
             onRevealClick = hideAndChessGameEngine::onRevealClick,
+            onRandomChessPieceRevealClick = hideAndChessGameEngine::onRandomChessPieceRevealClick,
+            onRandomXMarkRevealClick = hideAndChessGameEngine::onRandomXMarkRevealClick,
             onResetClick = hideAndChessGameEngine::onResetClick,
         )
     }

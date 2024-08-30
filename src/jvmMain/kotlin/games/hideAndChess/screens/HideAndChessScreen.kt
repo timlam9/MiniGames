@@ -20,6 +20,8 @@ fun HideAndChessScreen(
     state: HideAndChessState,
     onCellClick: (HideAndChessCell) -> Unit,
     onRevealClick: () -> Unit,
+    onRandomChessPieceRevealClick: () -> Unit,
+    onRandomXMarkRevealClick: () -> Unit,
     onResetClick: () -> Unit,
 ) {
     Row(
@@ -38,6 +40,12 @@ fun HideAndChessScreen(
         ) {
             Button(onClick = onRevealClick) {
                 Text(if (state.shouldReveal) "Hide" else "Reveal")
+            }
+            Button(onClick = onRandomChessPieceRevealClick) {
+                Text("Random Chess piece reveal")
+            }
+            Button(onClick = onRandomXMarkRevealClick) {
+                Text("Random X mark reveal")
             }
             Button(onClick = onResetClick) {
                 Text("Reset")

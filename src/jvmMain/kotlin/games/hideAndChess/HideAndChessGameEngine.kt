@@ -49,6 +49,60 @@ class HideAndChessGameEngine : GameEngine {
         }
     }
 
+    fun onRandomChessPieceRevealClick() {
+        _state.update { currentState ->
+            var reveal = true
+            val newBoard = currentState.board.copy(
+                value = currentState.board.value
+                    .shuffled()
+                    .map { currentCell ->
+                        if (
+                            reveal
+                            && currentCell.type == HideAndChessCell.Type.KING
+                            && currentCell.mark != HideAndChessCell.Mark.TIC
+                            && !currentCell.isRevealed
+                        ) {
+                            reveal = false
+                            currentCell.copy(isRevealed = true)
+                        } else {
+                            currentCell
+                        }
+                    }
+            )
+            currentState.copy(
+                board = newBoard,
+                shouldReveal = newBoard.hasWon()
+            )
+        }
+    }
+
+    fun onRandomXMarkRevealClick() {
+        _state.update { currentState ->
+            var reveal = true
+            val newBoard = currentState.board.copy(
+                value = currentState.board.value
+                    .shuffled()
+                    .map { currentCell ->
+                        if (
+                            reveal
+                            && currentCell.type == HideAndChessCell.Type.NONE
+                            && currentCell.mark != HideAndChessCell.Mark.X
+                            && !currentCell.isRevealed
+                        ) {
+                            reveal = false
+                            currentCell.copy(mark = HideAndChessCell.Mark.X)
+                        } else {
+                            currentCell
+                        }
+                    }
+            )
+            currentState.copy(
+                board = newBoard,
+                shouldReveal = newBoard.hasWon()
+            )
+        }
+    }
+
     fun onResetClick() {
         _state.update { currentState ->
             currentState.copy(

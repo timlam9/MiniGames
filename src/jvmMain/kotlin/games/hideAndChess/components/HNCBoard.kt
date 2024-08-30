@@ -47,7 +47,7 @@ fun HNCBoard(
                                 mark = mark,
                                 onClick = { onCellClick(this) },
                                 borders = getBorders(board),
-                                shouldReveal = shouldReveal,
+                                shouldReveal = shouldReveal || isRevealed,
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxHeight(),

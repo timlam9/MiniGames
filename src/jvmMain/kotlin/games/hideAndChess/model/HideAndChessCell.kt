@@ -6,6 +6,7 @@ data class HideAndChessCell(
     val mark: Mark,
     val positionX: Int,
     val positionY: Int,
+    val isRevealed: Boolean,
 ) {
 
     fun getBorders(board: HideAndChessBoard): Set<Border> {
@@ -133,6 +134,7 @@ data class HideAndChessCell(
                 mark = decodedMark,
                 positionX = decodedPositionX,
                 positionY = decodedPositionY,
+                isRevealed = false,
             )
         }
 
