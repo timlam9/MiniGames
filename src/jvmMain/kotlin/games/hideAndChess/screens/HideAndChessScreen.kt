@@ -2,6 +2,7 @@ package games.hideAndChess.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,6 +12,10 @@ import games.hideAndChess.components.HNCBoard
 import games.hideAndChess.model.HideAndChessCell
 import games.hideAndChess.model.HideAndChessState
 import ui.design.DefaultButton
+import ui.theme.Blue
+import ui.theme.Green
+import ui.theme.Orange
+import ui.theme.Purple
 
 @Composable
 fun HideAndChessScreen(
@@ -37,23 +42,31 @@ fun HideAndChessScreen(
         ) {
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
-                text = if (state.shouldReveal) "Hide" else "Reveal",
+                text = if (state.shouldReveal) "Hide chess pieces" else "Reveal all chess pieces",
                 onClick = onRevealClick,
+                color = Purple,
+                textColor = MaterialTheme.colors.primaryVariant,
             )
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
-                text = "Random Chess piece reveal",
+                text = "Reveal random chess piece",
                 onClick = onRandomChessPieceRevealClick,
+                color = Orange,
+                textColor = MaterialTheme.colors.primaryVariant,
             )
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
-                text = "Random X mark reveal",
+                text = "Reveal random X mark",
                 onClick = onRandomXMarkRevealClick,
+                color = Blue,
+                textColor = MaterialTheme.colors.primaryVariant,
             )
             DefaultButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Reset",
                 onClick = onResetClick,
+                color = Green,
+                textColor = MaterialTheme.colors.primaryVariant,
             )
         }
     }
