@@ -1,19 +1,16 @@
 package games.hideAndChess.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import games.hideAndChess.components.HNCBoard
 import games.hideAndChess.model.HideAndChessCell
 import games.hideAndChess.model.HideAndChessState
+import ui.design.DefaultButton
 
 @Composable
 fun HideAndChessScreen(
@@ -34,22 +31,30 @@ fun HideAndChessScreen(
             onCellClick = onCellClick,
         )
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(20.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Button(onClick = onRevealClick) {
-                Text(if (state.shouldReveal) "Hide" else "Reveal")
-            }
-            Button(onClick = onRandomChessPieceRevealClick) {
-                Text("Random Chess piece reveal")
-            }
-            Button(onClick = onRandomXMarkRevealClick) {
-                Text("Random X mark reveal")
-            }
-            Button(onClick = onResetClick) {
-                Text("Reset")
-            }
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
+                text = if (state.shouldReveal) "Hide" else "Reveal",
+                onClick = onRevealClick,
+            )
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
+                text = "Random Chess piece reveal",
+                onClick = onRandomChessPieceRevealClick,
+            )
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
+                text = "Random X mark reveal",
+                onClick = onRandomXMarkRevealClick,
+            )
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Reset",
+                onClick = onResetClick,
+            )
         }
     }
 }
