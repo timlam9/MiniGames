@@ -10,12 +10,12 @@ sealed interface GameInfoScreen {
     data class Memo(
         val title: String = "Memo info",
         val content: String = MEMO_INFO,
-        val image: String = "ic_memo.png",
+        val image: String = "home/ic_memo.png",
     ) : GameInfoScreen
 
     data class Deal(
         val title: String = "Deal info",
         val content: String = DEAL_INFO,
-        val image: String = "deal.jpeg",
+        val image: String = "home/deal.jpeg",
     ) : GameInfoScreen
 }

@@ -3,8 +3,8 @@ package ui.navigation
 enum class GameScreen(val image: String, val title: String) {
 
     HOME("tiger.jpg", "Home"),
-    MEMO("ic_memo.png", "Memo"),
-    DEAL("deal.jpeg", "Deal"),
-    HANGMAN("hangman.jpeg", "Hangman"),
-    HIDE_AND_CHESS("hangman.jpeg", "Hide And Chess"),
+    MEMO("home/ic_memo.png", "Memo"),
+    DEAL("home/deal.jpeg", "Deal"),
+    HANGMAN("home/hangman.jpeg", "Hangman"),
+    HIDE_AND_CHESS("home/hide_and_chess.png", "Hide And Chess"),
 }

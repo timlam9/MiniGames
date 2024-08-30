@@ -26,7 +26,7 @@ fun DealScreen(
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = painterResource("deal.jpeg"),
+            painter = painterResource("home/deal.jpeg"),
             contentDescription = "",
             contentScale = ContentScale.Crop,
         )

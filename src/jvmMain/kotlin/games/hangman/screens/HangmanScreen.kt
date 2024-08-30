@@ -161,13 +161,13 @@ private fun Hangman(
         verticalArrangement = Arrangement.Top,
     ) {
         HangmanImage(
-            imageRes = "noose.png",
+            imageRes = "hangman/noose.png",
             imageHeight = imageHeight,
             visible = true,
         )
         AnimatedVisibility(wrongTries >= 1) {
             HangmanImage(
-                imageRes = "head.png",
+                imageRes = "hangman/head.png",
                 imageHeight = imageHeight,
                 visible = true,
                 yOffset = imageHeight / 2,
@@ -182,7 +182,7 @@ private fun Hangman(
         ) {
             AnimatedVisibility(wrongTries >= 3) {
                 HangmanImage(
-                    imageRes = "right_arm.png",
+                    imageRes = "hangman/right_arm.png",
                     imageHeight = imageHeight * 2,
                     imageWidth = imageHeight,
                     visible = true,
@@ -192,7 +192,7 @@ private fun Hangman(
             }
             AnimatedVisibility(wrongTries >= 2) {
                 HangmanImage(
-                    imageRes = "body.png",
+                    imageRes = "hangman/body.png",
                     imageHeight = imageHeight * 2,
                     imageWidth = imageHeight * 2,
                     visible = true,
@@ -201,7 +201,7 @@ private fun Hangman(
             }
             AnimatedVisibility(wrongTries >= 4) {
                 HangmanImage(
-                    imageRes = "left_arm.png",
+                    imageRes = "hangman/left_arm.png",
                     imageHeight = imageHeight * 2,
                     imageWidth = imageHeight,
                     visible = true,
@@ -219,7 +219,7 @@ private fun Hangman(
         ) {
             AnimatedVisibility(wrongTries >= 5) {
                 HangmanImage(
-                    imageRes = "right_leg.png",
+                    imageRes = "hangman/right_leg.png",
                     imageHeight = imageHeight * 2,
                     visible = true,
                     xOffset = imageHeight / 2,
@@ -228,7 +228,7 @@ private fun Hangman(
             }
             AnimatedVisibility(wrongTries >= 6) {
                 HangmanImage(
-                    imageRes = "right_leg.png",
+                    imageRes = "hangman/right_leg.png",
                     imageHeight = imageHeight * 2,
                     visible = true,
                     xOffset = -imageHeight / 2,
@@ -238,7 +238,7 @@ private fun Hangman(
         }
         AnimatedVisibility(wrongTries >= 8) {
             HangmanImage(
-                imageRes = "fire.png",
+                imageRes = "hangman/fire.png",
                 imageHeight = imageHeight * 2,
                 imageWidth = imageHeight * 2,
                 visible = true,
@@ -248,7 +248,7 @@ private fun Hangman(
         }
         AnimatedVisibility(wrongTries >= 7) {
             HangmanImage(
-                imageRes = "firewood.png",
+                imageRes = "hangman/firewood.png",
                 imageHeight = imageHeight,
                 imageWidth = imageHeight * 2,
                 visible = true,
