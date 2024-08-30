@@ -36,7 +36,7 @@ fun MainScreen(
         topBar = {
             if (screen != GameScreen.HOME) {
                 Toolbar(
-                    title = screen.name,
+                    title = screen.title,
                     onBackClick = {
                         memoGameEngine.resetGame()
                         screen = GameScreen.HOME
