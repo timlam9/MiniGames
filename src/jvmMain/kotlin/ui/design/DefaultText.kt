@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -21,7 +22,8 @@ fun DefaultText(
         style = MaterialTheme.typography.button.copy(
             color = textColor,
             fontWeight = FontWeight.Bold,
-            fontSize = fontSize
+            fontSize = fontSize,
+            textAlign = TextAlign.Center,
         ),
         modifier = modifier,
     )
