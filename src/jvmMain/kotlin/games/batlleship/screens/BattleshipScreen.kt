@@ -39,6 +39,7 @@ fun BattleshipScreen(
             Box(
                 modifier = Modifier
                     .padding(10.dp)
+                    .aspectRatio(1f)
                     .fillMaxSize()
                     .border(
                         width = 5.dp,

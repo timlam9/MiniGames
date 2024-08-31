@@ -1,22 +1,19 @@
 package home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import ui.navigation.GameScreen
 import home.components.MenuGameCard
+import ui.navigation.GameScreen
 
 @Composable
 fun MenuScreen(
@@ -33,18 +30,34 @@ fun MenuScreen(
             style = MaterialTheme.typography.h2,
             color = Color.DarkGray,
         )
-        LazyRow(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.DarkGray),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(space = 20.dp),
-            contentPadding = PaddingValues(horizontal = 100.dp)
-        ) {
-            items(
-                items = games,
-                key = { it.ordinal },
-            ) {
+        GamesGrid(
+            games = games,
+            onGameCardClick = onGameCardClick,
+            onInfoIconClick = onInfoIconClick,
+        )
+    }
+}
+
+
+@Composable
+private fun GamesGrid(
+    games: List<GameScreen>,
+    onGameCardClick: (game: GameScreen) -> Unit,
+    onInfoIconClick: (game: GameScreen) -> Unit,
+) {
+    val state = rememberLazyGridState()
+
+    LazyVerticalGrid(
+        horizontalArrangement = Arrangement.spacedBy(30.dp),
+        verticalArrangement = Arrangement.spacedBy(30.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.DarkGray),
+        state = state,
+        columns = GridCells.Adaptive(300.dp),
+        contentPadding = PaddingValues(30.dp),
+        content = {
+            items(games) {
                 MenuGameCard(
                     title = it.title,
                     image = it.image,
@@ -53,5 +66,5 @@ fun MenuScreen(
                 )
             }
         }
-    }
+    )
 }
