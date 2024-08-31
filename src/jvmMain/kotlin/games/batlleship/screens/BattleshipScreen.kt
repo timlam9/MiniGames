@@ -1,4 +1,4 @@
-package games.findTheStar.screens
+package games.batlleship.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,16 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import games.findTheStar.components.StarBoard
-import games.findTheStar.model.FindTheStarCell
-import games.findTheStar.model.FindTheStarState
+import games.batlleship.components.BattleshipBoardUI
+import games.batlleship.model.BattleshipCell
+import games.batlleship.model.BattleshipState
 import ui.design.DefaultButton
+import ui.theme.Blue
 import ui.theme.Purple
 
 @Composable
-fun FindTheStarScreen(
-    state: FindTheStarState,
-    onCellClick: (FindTheStarCell) -> Unit,
+fun BattleshipScreen(
+    state: BattleshipState,
+    onCellClick: (BattleshipCell) -> Unit,
     onPlayAgainClick: () -> Unit,
     onRevealBoardClick: () -> Unit,
 ) {
@@ -29,10 +30,10 @@ fun FindTheStarScreen(
         horizontalArrangement = Arrangement.Start,
     ) {
         if (state.board.value.isNotEmpty()) {
-            StarBoard(
+            BattleshipBoardUI(
                 board = state.board,
                 onCellClick = onCellClick,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier,
             )
         } else {
             Box(
@@ -45,8 +46,7 @@ fun FindTheStarScreen(
                         shape = RoundedCornerShape(10.dp)
                     )
                     .clip(shape = RoundedCornerShape(10.dp))
-                    .background(Purple)
-                    .weight(1f)
+                    .background(Blue)
             )
         }
         Column(

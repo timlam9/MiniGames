@@ -8,20 +8,20 @@ data class FindTheStarBoard(
 )
 
 /**
- * 1 to 10
+ * 1 to 12
  */
 val BoardYCoordinates = List(12) {
     it + 1
 }
 
 /**
- * 1 to 10
+ * 1 to 8
  */
 val BoardXCoordinates = List(8) {
     it + 1
 }
 
-fun generateRandomBoard(): FindTheStarBoard {
+fun generateRandomFindTheStarBoard(): FindTheStarBoard {
     val board = mutableListOf<FindTheStarCell>()
     var id = 1
     var color = HideAndChessCell.Color.PURPLE

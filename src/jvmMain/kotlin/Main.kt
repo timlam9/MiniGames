@@ -6,6 +6,7 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import games.batlleship.BattleshipGameEngine
 import games.deal.DealGameEngine
 import games.memo.MemoGameEngine
 import kotlinx.coroutines.delay
@@ -28,6 +29,7 @@ fun App(
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
     findTheStarGameEngine: FindTheStarGameEngine,
+    battleshipGameEngine: BattleshipGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
         keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
@@ -41,6 +43,7 @@ fun App(
             hangmanGameEngine = hangmanGameEngine,
             hideAndChessGameEngine = hideAndChessGameEngine,
             findTheStarGameEngine = findTheStarGameEngine,
+            battleshipGameEngine = battleshipGameEngine,
         )
     }
 }
@@ -51,6 +54,7 @@ fun main() = application {
     val hangmanGameEngine = HangmanGameEngine()
     val hideAndChessGameEngine = HideAndChessGameEngine()
     val findTheStarGameEngine = FindTheStarGameEngine()
+    val battleshipGameEngine = BattleshipGameEngine()
 
     Window(
         onKeyEvent = { keyEvent ->
@@ -66,6 +70,7 @@ fun main() = application {
             hangmanGameEngine = hangmanGameEngine,
             hideAndChessGameEngine = hideAndChessGameEngine,
             findTheStarGameEngine = findTheStarGameEngine,
+            battleshipGameEngine = battleshipGameEngine,
         )
     }
 }

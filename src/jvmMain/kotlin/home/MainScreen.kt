@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import games.batlleship.BattleshipGameEngine
+import games.batlleship.screens.BattleshipScreen
 import games.deal.DealGameEngine
 import games.deal.screens.DealScreen
 import games.findTheStar.FindTheStarGameEngine
@@ -31,6 +33,7 @@ fun MainScreen(
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
     findTheStarGameEngine: FindTheStarGameEngine,
+    battleshipGameEngine: BattleshipGameEngine,
 ) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
@@ -74,6 +77,7 @@ fun MainScreen(
                     hangmanGameEngine = hangmanGameEngine,
                     hideAndChessGameEngine = hideAndChessGameEngine,
                     findTheStarGameEngine = findTheStarGameEngine,
+                    battleshipGameEngine = battleshipGameEngine,
                     onGameCardClick = { screen = it },
                     onInfoIconClick = { gameInfoScreen = it },
                 )
@@ -90,14 +94,16 @@ private fun GamesNavigation(
     hangmanGameEngine: HangmanGameEngine,
     hideAndChessGameEngine: HideAndChessGameEngine,
     findTheStarGameEngine: FindTheStarGameEngine,
+    battleshipGameEngine: BattleshipGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
     onInfoIconClick: (GameInfoScreen) -> Unit,
 ) {
-    val memostate by memoGameEngine.state.collectAsState()
+    val memoState by memoGameEngine.state.collectAsState()
     val dealState by dealGameEngine.state.collectAsState()
     val hangmanState by hangmanGameEngine.state.collectAsState()
     val hideAndChessState by hideAndChessGameEngine.state.collectAsState()
     val findTheStarState by findTheStarGameEngine.state.collectAsState()
+    val battleshipState by battleshipGameEngine.state.collectAsState()
 
     when (screen) {
         GameScreen.HOME -> {
@@ -111,7 +117,7 @@ private fun GamesNavigation(
         }
 
         GameScreen.MEMO -> MemoGameScreen(
-            state = memostate,
+            state = memoState,
             onGameStart = memoGameEngine::onGameStart,
             onCardClick = memoGameEngine::onCardClick,
         )
@@ -141,6 +147,13 @@ private fun GamesNavigation(
             onCellClick = findTheStarGameEngine::onCellClick,
             onPlayAgainClick = findTheStarGameEngine::onPlayAgainClick,
             onRevealBoardClick = findTheStarGameEngine::onRevealBoardClick,
+        )
+
+        GameScreen.BATTLESHIP -> BattleshipScreen(
+            state = battleshipState,
+            onCellClick = battleshipGameEngine::onCellClick,
+            onPlayAgainClick = battleshipGameEngine::onPlayAgainClick,
+            onRevealBoardClick = battleshipGameEngine::onRevealBoardClick,
         )
     }
 }
@@ -180,6 +193,7 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.HANGMAN -> GameInfoScreen.None
     GameScreen.HIDE_AND_CHESS -> GameInfoScreen.None
     GameScreen.FIND_THE_STAR -> GameInfoScreen.None
+    GameScreen.BATTLESHIP -> GameInfoScreen.None
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {

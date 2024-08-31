@@ -1,43 +1,40 @@
-package games.findTheStar
+package games.batlleship
 
 import GameEngine
-import games.findTheStar.model.FindTheStarBoard
-import games.findTheStar.model.FindTheStarCell
-import games.findTheStar.model.FindTheStarState
-import games.findTheStar.model.generateRandomFindTheStarBoard
+import games.batlleship.model.BattleshipBoard
+import games.batlleship.model.BattleshipCell
+import games.batlleship.model.BattleshipState
+import games.batlleship.model.generateRandomBattleshipBoard
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class FindTheStarGameEngine : GameEngine {
+class BattleshipGameEngine : GameEngine {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
-    private val initialState = FindTheStarState(board = generateRandomFindTheStarBoard())
+    private val initialState = BattleshipState(
+        board = generateRandomBattleshipBoard(),
+        isBoardRevealed = false,
+    )
 
-    private val _state: MutableStateFlow<FindTheStarState> = MutableStateFlow(initialState)
-    val state: StateFlow<FindTheStarState> = _state.asStateFlow()
+    private val _state: MutableStateFlow<BattleshipState> = MutableStateFlow(initialState)
+    val state: StateFlow<BattleshipState> = _state.asStateFlow()
 
-    fun onCellClick(cell: FindTheStarCell) {
+    fun onCellClick(cell: BattleshipCell) {
         _state.update { currentState ->
             currentState.copy(
                 board = currentState.board.copy(
                     value = currentState.board.value.map {
                         if (it.id == cell.id) {
-                            it.copy(
-                                isDiscovered = true
-                            )
+                            it.copy(isAttacked = true)
                         } else {
                             it
                         }
                     }
                 )
             )
-        }
-
-        if (cell.type == FindTheStarCell.Type.Planet.Sun) {
-            onRevealBoardClick()
         }
     }
 
@@ -46,7 +43,7 @@ class FindTheStarGameEngine : GameEngine {
             emptyBoard()
             delay(150)
             _state.update { currentState ->
-                currentState.copy(board = generateRandomFindTheStarBoard())
+                currentState.copy(board = generateRandomBattleshipBoard())
             }
         }
     }
@@ -54,7 +51,7 @@ class FindTheStarGameEngine : GameEngine {
     private fun emptyBoard() {
         _state.update { currentState ->
             currentState.copy(
-                board = FindTheStarBoard(emptyList())
+                board = BattleshipBoard(value = emptyList())
             )
         }
     }
@@ -64,7 +61,7 @@ class FindTheStarGameEngine : GameEngine {
             currentState.copy(
                 board = currentState.board.copy(
                     value = currentState.board.value.map {
-                        it.copy(isDiscovered = true)
+                        it.copy(isAttacked = true)
                     }
                 )
             )
