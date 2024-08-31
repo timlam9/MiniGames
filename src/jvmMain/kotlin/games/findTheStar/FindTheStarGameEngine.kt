@@ -1,10 +1,7 @@
 package games.findTheStar
 
 import GameEngine
-import games.findTheStar.model.FindTheStarBoard
-import games.findTheStar.model.FindTheStarCell
-import games.findTheStar.model.FindTheStarState
-import games.findTheStar.model.generateRandomFindTheStarBoard
+import games.findTheStar.model.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,10 +11,22 @@ import kotlinx.coroutines.flow.update
 class FindTheStarGameEngine : GameEngine {
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
-    private val initialState = FindTheStarState(board = generateRandomFindTheStarBoard())
+    private val initialState = FindTheStarState(
+        board = generateRandomFindTheStarBoard(level = Level.MEDIUM),
+        level = Level.MEDIUM,
+    )
 
     private val _state: MutableStateFlow<FindTheStarState> = MutableStateFlow(initialState)
     val state: StateFlow<FindTheStarState> = _state.asStateFlow()
+
+    fun onLevelSelected(level: Level) {
+        _state.update {
+            it.copy(
+                board = generateRandomFindTheStarBoard(level = level),
+                level = level,
+            )
+        }
+    }
 
     fun onCellClick(cell: FindTheStarCell) {
         _state.update { currentState ->
@@ -46,7 +55,7 @@ class FindTheStarGameEngine : GameEngine {
             emptyBoard()
             delay(150)
             _state.update { currentState ->
-                currentState.copy(board = generateRandomFindTheStarBoard())
+                currentState.copy(board = generateRandomFindTheStarBoard(level = currentState.level))
             }
         }
     }

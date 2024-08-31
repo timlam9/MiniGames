@@ -21,7 +21,7 @@ val BoardXCoordinates = List(8) {
     it + 1
 }
 
-fun generateRandomFindTheStarBoard(): FindTheStarBoard {
+fun generateRandomFindTheStarBoard(level: Level): FindTheStarBoard {
     val board = mutableListOf<FindTheStarCell>()
     var id = 1
     var color = HideAndChessCell.Color.PURPLE
@@ -61,7 +61,7 @@ fun generateRandomFindTheStarBoard(): FindTheStarBoard {
     val sunCell = boardWithPlanets.first()
     var boardWithDirections = boardWithPlanets
 
-    repeat(32) {
+    repeat(level.rockets) {
         val directionCell = boardWithDirections
             .filter { it.type == FindTheStarCell.Type.EmptySpace }
             .random()

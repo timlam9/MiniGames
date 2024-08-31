@@ -146,6 +146,7 @@ private fun GamesNavigation(
         GameScreen.FIND_THE_STAR -> FindTheStarScreen(
             state = findTheStarState,
             onCellClick = findTheStarGameEngine::onCellClick,
+            onLevelSelected = findTheStarGameEngine::onLevelSelected,
             onPlayAgainClick = findTheStarGameEngine::onPlayAgainClick,
             onRevealBoardClick = findTheStarGameEngine::onRevealBoardClick,
         )
