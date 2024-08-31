@@ -24,8 +24,6 @@ val BoardYCoordinates = List(10) {
 fun generateRandomBattleshipBoard(): BattleshipBoard {
     val board = mutableListOf<BattleshipCell>()
     var id = 1
-    var color = HideAndChessCell.Color.PURPLE
-
 
     for (y in BoardYCoordinates.indices) {
         for (x in BoardXCoordinates.indices) {
@@ -33,7 +31,7 @@ fun generateRandomBattleshipBoard(): BattleshipBoard {
                 BattleshipCell(
                     id = id,
                     position = BattleshipCell.Position(x = x, y = y),
-                    color = color,
+                    color = HideAndChessCell.Color.BROWN,
                     type = BattleshipCell.Type.SEA,
                     isAttacked = false,
                     isRevealed = false,
@@ -42,7 +40,6 @@ fun generateRandomBattleshipBoard(): BattleshipBoard {
             )
 
             id++
-            color = color.next()
         }
     }
 
