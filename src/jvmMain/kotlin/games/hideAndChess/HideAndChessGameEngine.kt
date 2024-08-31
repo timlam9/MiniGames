@@ -37,6 +37,20 @@ class HideAndChessGameEngine : GameEngine {
         }
     }
 
+    fun onCellLongClick(cell: HideAndChessCell) {
+        _state.update { currentState ->
+            val newBoard = currentState.board.copy(
+                value = currentState.board.value.map { currentCell ->
+                    if (cell == currentCell) currentCell.copy(isRevealed = true) else currentCell
+                }
+            )
+            currentState.copy(
+                board = newBoard,
+                shouldReveal = newBoard.hasWon()
+            )
+        }
+    }
+
     private fun HideAndChessBoard.hasWon() =
         value.filter { it.type == HideAndChessCell.Type.KING && it.mark == HideAndChessCell.Mark.TIC }.size == 10
 

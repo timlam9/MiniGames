@@ -21,6 +21,7 @@ import ui.theme.Purple
 fun HideAndChessScreen(
     state: HideAndChessState,
     onCellClick: (HideAndChessCell) -> Unit,
+    onCellLongClick: (HideAndChessCell) -> Unit,
     onRevealClick: () -> Unit,
     onRandomChessPieceRevealClick: () -> Unit,
     onRandomXMarkRevealClick: () -> Unit,
@@ -34,6 +35,7 @@ fun HideAndChessScreen(
             board = state.board,
             shouldReveal = state.shouldReveal,
             onCellClick = onCellClick,
+            onCellLongClick = onCellLongClick,
         )
         Column(
             modifier = Modifier.fillMaxSize().padding(20.dp),

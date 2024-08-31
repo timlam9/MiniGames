@@ -1,10 +1,7 @@
 package games.hideAndChess.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import games.hideAndChess.model.HideAndChessCell
 import ui.theme.*
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HNCCell(
     color: HideAndChessCell.Color,
@@ -29,6 +27,7 @@ fun HNCCell(
     shouldReveal: Boolean,
     borders: Set<HideAndChessCell.Border>,
     onClick: () -> Unit,
+    onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val backgroundColor = when (color) {
@@ -63,10 +62,11 @@ fun HNCCell(
             )
             .fillMaxSize()
             .background(color = backgroundColor)
-            .clickable(
+            .combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick,
+                onLongClick = onLongClick,
             )
             .drawBehind {
                 val strokeWidthPx = density.run { 5.dp.toPx() }

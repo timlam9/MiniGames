@@ -17,6 +17,7 @@ fun HNCBoard(
     board: HideAndChessBoard,
     shouldReveal: Boolean,
     onCellClick: (HideAndChessCell) -> Unit,
+    onCellLongClick: (HideAndChessCell) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -46,6 +47,7 @@ fun HNCBoard(
                                 type = type,
                                 mark = mark,
                                 onClick = { onCellClick(this) },
+                                onLongClick = { onCellLongClick(this) },
                                 borders = getBorders(board),
                                 shouldReveal = shouldReveal || isRevealed,
                                 modifier = Modifier
