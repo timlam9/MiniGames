@@ -45,6 +45,7 @@ fun BattleshipBoardUI(
                             color = color,
                             type = type,
                             isAttacked = isAttacked,
+                            isRevealed = isRevealed,
                             shipDirection = shipDirection,
                             onClick = { onCellClick(this) },
                             modifier = Modifier

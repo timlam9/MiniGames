@@ -36,6 +36,7 @@ fun generateRandomBattleshipBoard(): BattleshipBoard {
                     color = color,
                     type = BattleshipCell.Type.SEA,
                     isAttacked = false,
+                    isRevealed = false,
                     shipDirection = BattleshipCell.ShipDirection.RIGHT,
                 )
             )
@@ -58,13 +59,13 @@ private fun List<BattleshipCell>.addShips(): MutableList<BattleshipCell> {
         var randomCell = this.random()
         println("Random cell: $randomCell")
 
-        val ship = Ships[number + 1]!!
+        val ship = BattleshipCell.Ship[number + 1]!!
         var shipCell = when (ship) {
-            Ships.CARRIER -> BattleshipCell.Type.CARRIER_A
-            Ships.BATTLESHIP -> BattleshipCell.Type.BATTLESHIP_A
-            Ships.DESTROYER -> BattleshipCell.Type.DESTROYER_A
-            Ships.SUBMARINE -> BattleshipCell.Type.SUBMARINE_A
-            Ships.PATROL_BOAT -> BattleshipCell.Type.PATROL_BOAT_A
+            BattleshipCell.Ship.CARRIER -> BattleshipCell.Type.CARRIER_A
+            BattleshipCell.Ship.BATTLESHIP -> BattleshipCell.Type.BATTLESHIP_A
+            BattleshipCell.Ship.DESTROYER -> BattleshipCell.Type.DESTROYER_A
+            BattleshipCell.Ship.SUBMARINE -> BattleshipCell.Type.SUBMARINE_A
+            BattleshipCell.Ship.PATROL_BOAT -> BattleshipCell.Type.PATROL_BOAT_A
         }
 
         when (direction) {
@@ -130,19 +131,4 @@ private fun List<BattleshipCell>.addShips(): MutableList<BattleshipCell> {
         }
     }
     return board.toMutableList()
-}
-
-private enum class Ships(val id: Int, val size: Int) {
-
-    CARRIER(1, 5),
-    BATTLESHIP(2, 4),
-    DESTROYER(3, 3),
-    SUBMARINE(4, 3),
-    PATROL_BOAT(5, 2);
-
-    companion object {
-
-        private val map = Ships.values().associateBy { it.id }
-        operator fun get(id: Int) = map[id]
-    }
 }

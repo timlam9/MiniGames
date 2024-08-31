@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ fun BattleshipCellUI(
     color: HideAndChessCell.Color,
     type: BattleshipCell.Type,
     isAttacked: Boolean,
+    isRevealed: Boolean,
     shipDirection: BattleshipCell.ShipDirection,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -66,6 +68,12 @@ fun BattleshipCellUI(
         BattleshipCell.Type.SEA -> "battleship/sea_tile.png"
     }
 
+    val attackIcon = when (type) {
+        BattleshipCell.Type.SEA -> "battleship/ic_target.png"
+        else -> "battleship/ic_explosion.png"
+    }
+
+
     Box(
         modifier = modifier
             .border(
@@ -73,14 +81,14 @@ fun BattleshipCellUI(
                 color = Color.Black,
             )
             .fillMaxSize()
-            .background(color = if (isAttacked) Gray else backgroundColor)
+            .background(color = if (isRevealed) Gray else backgroundColor)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick,
             ),
     ) {
-        AnimatedVisibility(isAttacked) {
+        AnimatedVisibility(isRevealed || isAttacked && type == BattleshipCell.Type.SEA) {
             Image(
                 painter = painterResource(typeIcon),
                 contentDescription = null,
@@ -91,7 +99,16 @@ fun BattleshipCellUI(
             )
         }
 
-        if (!isAttacked) {
+        AnimatedVisibility(isAttacked && type != BattleshipCell.Type.SEA) {
+            Image(
+                painter = painterResource(attackIcon),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize().padding(8.dp),
+            )
+        }
+
+        if (!isAttacked && !isRevealed) {
             DefaultText(text = title, modifier = Modifier.align(Alignment.Center))
         }
     }
