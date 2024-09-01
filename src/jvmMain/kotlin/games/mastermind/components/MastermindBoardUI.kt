@@ -1,4 +1,4 @@
-package games.hideAndChess.components
+package games.mastermind.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -8,23 +8,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import games.hideAndChess.model.BoardCoordinates
-import games.hideAndChess.model.HideAndChessBoard
-import games.hideAndChess.model.HideAndChessCell
+import games.mastermind.model.BoardXCoordinates
+import games.mastermind.model.BoardYCoordinates
+import games.mastermind.model.MastermindBoard
+import games.mastermind.model.MastermindCell
 
 @Composable
-fun HNCBoard(
-    board: HideAndChessBoard,
-    shouldReveal: Boolean,
-    onCellClick: (HideAndChessCell) -> Unit,
-    onCellLongClick: (HideAndChessCell) -> Unit,
+fun MastermindBoardUI(
+    board: MastermindBoard,
+    onCellClick: (MastermindCell) -> Unit,
+    onCellLongClick: (MastermindCell) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .padding(10.dp)
-            .aspectRatio(1f)
-            .fillMaxSize()
+            .fillMaxHeight()
+            .aspectRatio(0.46f, matchHeightConstraintsFirst = true)
             .border(
                 width = 5.dp,
                 color = Color.Black,
@@ -33,23 +33,23 @@ fun HNCBoard(
             .clip(shape = RoundedCornerShape(10.dp))
 
     ) {
-        BoardCoordinates.forEach { x ->
+        BoardYCoordinates.forEach { y ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
             ) {
-                BoardCoordinates.forEach { y ->
-                    board.value.find { it.positionX == x && it.positionY == y }
+                BoardXCoordinates.forEach { x ->
+                    board.value.find { it.position.x == x && it.position.y == y }
                         ?.run {
-                            HNCCell(
+                            MastermindCellUI(
                                 gameColor = gameColor,
-                                type = type,
-                                mark = mark,
                                 onClick = { onCellClick(this) },
                                 onLongClick = { onCellLongClick(this) },
-                                borders = getBorders(board),
-                                shouldReveal = shouldReveal || isRevealed,
+                                isRevealed = isRevealed,
+                                isCode = position.y == 0,
+                                type = type,
+                                hints = if (type is MastermindCell.Type.HintsCell) type.hints else emptyList(),
                                 modifier = Modifier
                                     .weight(1f)
                                     .fillMaxHeight(),

@@ -1,6 +1,6 @@
 package games.batlleship.model
 
-import games.hideAndChess.model.HideAndChessCell
+import games.GameColor
 import ui.next
 
 data class BattleshipBoard(
@@ -31,7 +31,7 @@ fun generateRandomBattleshipBoard(): BattleshipBoard {
                 BattleshipCell(
                     id = id,
                     position = BattleshipCell.Position(x = x, y = y),
-                    color = HideAndChessCell.Color.BROWN,
+                    gameColor = GameColor.BROWN,
                     type = BattleshipCell.Type.SEA,
                     isAttacked = false,
                     isRevealed = false,
@@ -54,7 +54,6 @@ private fun List<BattleshipCell>.addShips(): MutableList<BattleshipCell> {
     repeat(5) { number ->
         val direction = BattleshipCell.ShipDirection.values().random()
         var randomCell = this.random()
-        println("Random cell: $randomCell")
 
         val ship = BattleshipCell.Ship[number + 1]!!
         var shipCell = when (ship) {
@@ -84,7 +83,6 @@ private fun List<BattleshipCell>.addShips(): MutableList<BattleshipCell> {
                             size = ship.size,
                         )
                     ) {
-                        println("Current cell: $boardCell | ship cell: $shipCell")
                         val cell = boardCell.copy(type = shipCell)
                         shipCell = shipCell.next()
 

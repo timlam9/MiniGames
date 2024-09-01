@@ -1,13 +1,13 @@
 package games.findTheStar.model
 
-import games.hideAndChess.model.HideAndChessCell
+import games.GameColor
 
 data class FindTheStarCell(
     val id: Int,
     val position: Position,
     val type: Type,
     val isDiscovered: Boolean,
-    val color: HideAndChessCell.Color
+    val gameColor: GameColor
 ) {
 
     data class Position(

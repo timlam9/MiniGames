@@ -1,7 +1,9 @@
 package games.hideAndChess.model
 
+import games.GameColor
+
 data class HideAndChessCell(
-    val color: Color,
+    val gameColor: GameColor,
     val type: Type,
     val mark: Mark,
     val positionX: Int,
@@ -14,10 +16,10 @@ data class HideAndChessCell(
 
         board.value.forEach { currentCell ->
             when {
-                currentCell.positionX == positionX - 1 && currentCell.positionY == positionY && currentCell.color != color -> borders.add(Border.NORTH)
-                currentCell.positionX == positionX + 1 && currentCell.positionY == positionY && currentCell.color != color -> borders.add(Border.SOUTH)
-                currentCell.positionX == positionX && currentCell.positionY == positionY - 1 && currentCell.color != color -> borders.add(Border.WEST)
-                currentCell.positionX == positionX && currentCell.positionY == positionY + 1 && currentCell.color != color -> borders.add(Border.EAST)
+                currentCell.positionX == positionX - 1 && currentCell.positionY == positionY && currentCell.gameColor != gameColor -> borders.add(Border.NORTH)
+                currentCell.positionX == positionX + 1 && currentCell.positionY == positionY && currentCell.gameColor != gameColor -> borders.add(Border.SOUTH)
+                currentCell.positionX == positionX && currentCell.positionY == positionY - 1 && currentCell.gameColor != gameColor -> borders.add(Border.WEST)
+                currentCell.positionX == positionX && currentCell.positionY == positionY + 1 && currentCell.gameColor != gameColor -> borders.add(Border.EAST)
             }
         }
 
@@ -30,20 +32,6 @@ data class HideAndChessCell(
         WEST,
         EAST,
         SOUTH,
-    }
-
-    enum class Color {
-
-        PURPLE, // P
-        ORANGE, // O
-        BLUE, //  B
-        GREEN, // E
-        GRAY, // G
-        PINK, // K
-        CIEL, // C
-        RED, // R
-        BROWN, // W
-        YELLOW,  // Y
     }
 
     enum class Type {
@@ -60,24 +48,24 @@ data class HideAndChessCell(
     }
 
     fun encode(): String {
-        val colorCode = when (color) {
-            Color.PURPLE -> 'p'
-            Color.ORANGE -> 'O'
-            Color.BLUE -> 'B'
-            Color.GREEN -> 'E'
-            Color.GRAY -> 'G'
-            Color.PINK -> 'K'
-            Color.CIEL -> 'C'
-            Color.RED -> 'R'
-            Color.BROWN -> 'W'
-            Color.YELLOW -> 'Y'
+        val gameColorCode = when (gameColor) {
+            GameColor.PURPLE -> 'p'
+            GameColor.ORANGE -> 'O'
+            GameColor.BLUE -> 'B'
+            GameColor.GREEN -> 'E'
+            GameColor.GRAY -> 'G'
+            GameColor.PINK -> 'K'
+            GameColor.CIEL -> 'C'
+            GameColor.RED -> 'R'
+            GameColor.BROWN -> 'W'
+            GameColor.YELLOW -> 'Y'
         }
 
         val x = if (positionX == 10) 'X' else positionX
         val y = if (positionY == 10) 'X' else positionY
 
         return StringBuilder()
-            .append(colorCode)
+            .append(gameColorCode)
             .append(type.name.first())
             .append(mark.name.first())
             .append(x)
@@ -89,17 +77,17 @@ data class HideAndChessCell(
         fun decode(encodedCell: String): HideAndChessCell {
             val (color, type, mark, x, y) = encodedCell.toCharArray()
 
-            val decodedColor = when (color) {
-                'P' -> Color.PURPLE
-                'O' -> Color.ORANGE
-                'B' -> Color.BLUE
-                'E' -> Color.GREEN
-                'G' -> Color.GRAY
-                'K' -> Color.PINK
-                'C' -> Color.CIEL
-                'R' -> Color.RED
-                'W' -> Color.BROWN
-                'Y' -> Color.YELLOW
+            val decodedGameColor = when (color) {
+                'P' -> GameColor.PURPLE
+                'O' -> GameColor.ORANGE
+                'B' -> GameColor.BLUE
+                'E' -> GameColor.GREEN
+                'G' -> GameColor.GRAY
+                'K' -> GameColor.PINK
+                'C' -> GameColor.CIEL
+                'R' -> GameColor.RED
+                'W' -> GameColor.BROWN
+                'Y' -> GameColor.YELLOW
                 else -> throw IllegalArgumentException("Invalid cell color!")
             }
 
@@ -129,7 +117,7 @@ data class HideAndChessCell(
             }
 
             return HideAndChessCell(
-                color = decodedColor,
+                gameColor = decodedGameColor,
                 type = decodedType,
                 mark = decodedMark,
                 positionX = decodedPositionX,

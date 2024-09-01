@@ -18,15 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import games.GameColor
 import games.batlleship.model.BattleshipCell
-import games.hideAndChess.model.HideAndChessCell
 import ui.design.DefaultText
 import ui.theme.*
 
 @Composable
 fun BattleshipCellUI(
     title: String,
-    color: HideAndChessCell.Color,
+    gameColor: GameColor,
     type: BattleshipCell.Type,
     isAttacked: Boolean,
     isRevealed: Boolean,
@@ -34,17 +34,17 @@ fun BattleshipCellUI(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = when (color) {
-        HideAndChessCell.Color.PURPLE -> Purple
-        HideAndChessCell.Color.ORANGE -> Orange
-        HideAndChessCell.Color.BLUE -> Blue
-        HideAndChessCell.Color.GREEN -> Green
-        HideAndChessCell.Color.GRAY -> Gray
-        HideAndChessCell.Color.PINK -> Pink
-        HideAndChessCell.Color.CIEL -> Ciel
-        HideAndChessCell.Color.RED -> Red
-        HideAndChessCell.Color.BROWN -> Brown
-        HideAndChessCell.Color.YELLOW -> Yellow
+    val backgroundGameColor = when (gameColor) {
+        GameColor.PURPLE -> Purple
+        GameColor.ORANGE -> Orange
+        GameColor.BLUE -> Blue
+        GameColor.GREEN -> Green
+        GameColor.GRAY -> Gray
+        GameColor.PINK -> Pink
+        GameColor.CIEL -> Ciel
+        GameColor.RED -> Red
+        GameColor.BROWN -> Brown
+        GameColor.YELLOW -> Yellow
     }
 
     val typeIcon = when (type) {
@@ -81,7 +81,7 @@ fun BattleshipCellUI(
                 color = Color.Black,
             )
             .fillMaxSize()
-            .background(color = if (isRevealed) Gray else backgroundColor)
+            .background(color = if (isRevealed) Gray else backgroundGameColor)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

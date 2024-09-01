@@ -14,6 +14,7 @@ import games.deal.model.DealItem
 import games.findTheStar.FindTheStarGameEngine
 import games.hangman.HangmanGameEngine
 import games.hideAndChess.HideAndChessGameEngine
+import games.mastermind.MastermindGameEngine
 import home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
@@ -30,6 +31,7 @@ fun App(
     hideAndChessGameEngine: HideAndChessGameEngine,
     findTheStarGameEngine: FindTheStarGameEngine,
     battleshipGameEngine: BattleshipGameEngine,
+    mastermindGameEngine: MastermindGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
         keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
@@ -44,6 +46,7 @@ fun App(
             hideAndChessGameEngine = hideAndChessGameEngine,
             findTheStarGameEngine = findTheStarGameEngine,
             battleshipGameEngine = battleshipGameEngine,
+            mastermindGameEngine = mastermindGameEngine,
         )
     }
 }
@@ -55,6 +58,7 @@ fun main() = application {
     val hideAndChessGameEngine = HideAndChessGameEngine()
     val findTheStarGameEngine = FindTheStarGameEngine()
     val battleshipGameEngine = BattleshipGameEngine()
+    val mastermindGameEngine = MastermindGameEngine()
 
     Window(
         onKeyEvent = { keyEvent ->
@@ -71,6 +75,7 @@ fun main() = application {
             hideAndChessGameEngine = hideAndChessGameEngine,
             findTheStarGameEngine = findTheStarGameEngine,
             battleshipGameEngine = battleshipGameEngine,
+            mastermindGameEngine = mastermindGameEngine,
         )
     }
 }

@@ -1,13 +1,13 @@
 package games.batlleship.model
 
-import games.hideAndChess.model.HideAndChessCell
+import games.GameColor
 
 data class BattleshipCell(
     val id: Int,
     val position: Position,
     val isAttacked: Boolean,
     val isRevealed: Boolean,
-    val color: HideAndChessCell.Color,
+    val gameColor: GameColor,
     val type: Type,
     val shipDirection: ShipDirection,
 ) {

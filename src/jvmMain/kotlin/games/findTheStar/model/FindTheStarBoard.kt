@@ -1,6 +1,6 @@
 package games.findTheStar.model
 
-import games.hideAndChess.model.HideAndChessCell
+import games.GameColor
 import ui.next
 
 data class FindTheStarBoard(
@@ -24,7 +24,7 @@ val BoardXCoordinates = List(8) {
 fun generateRandomFindTheStarBoard(level: Level): FindTheStarBoard {
     val board = mutableListOf<FindTheStarCell>()
     var id = 1
-    var color = HideAndChessCell.Color.PURPLE
+    var gameColor = GameColor.PURPLE
 
     for (x in 1..BoardXCoordinates.size) {
         for (y in 1..BoardYCoordinates.size) {
@@ -32,14 +32,14 @@ fun generateRandomFindTheStarBoard(level: Level): FindTheStarBoard {
                 FindTheStarCell(
                     id = id,
                     position = FindTheStarCell.Position(x, y),
-                    color = color,
+                    gameColor = gameColor,
                     type = FindTheStarCell.Type.EmptySpace,
                     isDiscovered = false,
                 )
             )
 
             id++
-            color = color.next()
+            gameColor = gameColor.next()
         }
     }
 

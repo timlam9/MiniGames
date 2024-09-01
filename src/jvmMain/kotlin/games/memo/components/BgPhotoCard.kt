@@ -14,7 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import games.hideAndChess.model.HideAndChessCell
+import games.GameColor
 import ui.design.DefaultText
 import ui.theme.*
 
@@ -29,22 +29,22 @@ fun BgPhotoCard(
         elevation = 4.dp,
         contentColor = MaterialTheme.colors.primary,
     ) {
-        val randomColor by remember { mutableStateOf(HideAndChessCell.Color.values().random()) }
-        val backgroundColor = when (randomColor) {
-            HideAndChessCell.Color.PURPLE -> Purple
-            HideAndChessCell.Color.ORANGE -> Orange
-            HideAndChessCell.Color.BLUE -> Blue
-            HideAndChessCell.Color.GREEN -> Green
-            HideAndChessCell.Color.GRAY -> Gray
-            HideAndChessCell.Color.PINK -> Pink
-            HideAndChessCell.Color.CIEL -> Ciel
-            HideAndChessCell.Color.RED -> Red
-            HideAndChessCell.Color.BROWN -> Brown
-            HideAndChessCell.Color.YELLOW -> Yellow
+        val randomGameColor by remember { mutableStateOf(GameColor.values().random()) }
+        val backgroundGameColor = when (randomGameColor) {
+            GameColor.PURPLE -> Purple
+            GameColor.ORANGE -> Orange
+            GameColor.BLUE -> Blue
+            GameColor.GREEN -> Green
+            GameColor.GRAY -> Gray
+            GameColor.PINK -> Pink
+            GameColor.CIEL -> Ciel
+            GameColor.RED -> Red
+            GameColor.BROWN -> Brown
+            GameColor.YELLOW -> Yellow
         }
 
         Column(
-            modifier = textModifier.padding(0.dp).background(backgroundColor),
+            modifier = textModifier.padding(0.dp).background(backgroundGameColor),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
