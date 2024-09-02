@@ -115,8 +115,10 @@ fun LevelSlider(
         Spacer(Modifier.height(10.dp))
         Slider(
             value = sliderPosition,
+            onValueChangeFinished = { onLevelSelected(selectedLevel) },
             onValueChange = {
                 sliderPosition = it
+
                 selectedLevel = when (it) {
                     0f -> Level.TOO_EASY
                     1f -> Level.EASY
@@ -125,8 +127,6 @@ fun LevelSlider(
                     4f -> Level.TOO_HARD
                     else -> Level.MEDIUM
                 }
-
-                onLevelSelected(selectedLevel)
             },
             colors = SliderDefaults.colors(
                 thumbColor = MaterialTheme.colors.secondary,
