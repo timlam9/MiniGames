@@ -42,7 +42,7 @@ fun BattleshipBoardUI(
                     board.value.find { it.position.x == x && it.position.y == y }?.run {
                         BattleshipCellUI(
                             title = id.toString(),
-                            gameColor = gameColor,
+                            color = color,
                             type = type,
                             isAttacked = isAttacked,
                             isRevealed = isRevealed,

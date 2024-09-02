@@ -1,6 +1,6 @@
 package games.mastermind.model
 
-import games.GameColor
+import games.MiniGamesColor
 
 data class MastermindBoard(
     val value: List<MastermindCell>
@@ -20,8 +20,8 @@ val BoardXCoordinates = List(5) {
     it
 }
 
-val mastermindColors = GameColor.values().take(6)
-var mastermindCode: List<GameColor> = emptyList()
+val mastermindColors = MiniGamesColor.values().take(6)
+var mastermindCode: List<MiniGamesColor> = emptyList()
 
 fun generateRandomMastermindBoard(): MastermindBoard {
     val board = mutableListOf<MastermindCell>()
@@ -35,7 +35,7 @@ fun generateRandomMastermindBoard(): MastermindBoard {
                 MastermindCell(
                     id = id,
                     position = MastermindCell.Position(x, y),
-                    gameColor = if (y == 0 && x < 4) mastermindCode[x] else null,
+                    color = if (y == 0 && x < 4) mastermindCode[x] else null,
                     isRevealed = !(y == 0 && x < 4),
                     type = if (x < 4) MastermindCell.Type.PlayerCell else MastermindCell.Type.HintsCell(emptyList())
                 )

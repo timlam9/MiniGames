@@ -1,6 +1,6 @@
 package games.batlleship.model
 
-import games.GameColor
+import games.MiniGamesColor
 import ui.next
 
 data class BattleshipBoard(
@@ -31,7 +31,7 @@ fun generateRandomBattleshipBoard(): BattleshipBoard {
                 BattleshipCell(
                     id = id,
                     position = BattleshipCell.Position(x = x, y = y),
-                    gameColor = GameColor.BROWN,
+                    color = MiniGamesColor.BROWN,
                     type = BattleshipCell.Type.SEA,
                     isAttacked = false,
                     isRevealed = false,

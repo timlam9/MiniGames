@@ -14,9 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
+import games.toComposeColor
 import ui.design.DefaultText
-import ui.theme.*
 
 @Composable
 fun BgPhotoCard(
@@ -29,22 +29,10 @@ fun BgPhotoCard(
         elevation = 4.dp,
         contentColor = MaterialTheme.colors.primary,
     ) {
-        val randomGameColor by remember { mutableStateOf(GameColor.values().random()) }
-        val backgroundGameColor = when (randomGameColor) {
-            GameColor.PURPLE -> Purple
-            GameColor.ORANGE -> Orange
-            GameColor.BLUE -> Blue
-            GameColor.GREEN -> Green
-            GameColor.GRAY -> Gray
-            GameColor.PINK -> Pink
-            GameColor.CIEL -> Ciel
-            GameColor.RED -> Red
-            GameColor.BROWN -> Brown
-            GameColor.YELLOW -> Yellow
-        }
+        val randomColor by remember { mutableStateOf(MiniGamesColor.values().random().toComposeColor()) }
 
         Column(
-            modifier = textModifier.padding(0.dp).background(backgroundGameColor),
+            modifier = textModifier.padding(0.dp).background(randomColor),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

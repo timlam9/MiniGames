@@ -1,11 +1,11 @@
 package games.mastermind.model
 
-import games.GameColor
+import games.MiniGamesColor
 
 data class MastermindCell(
     val id: Int,
     val position: Position,
-    val gameColor: GameColor?,
+    val color: MiniGamesColor?,
     val isRevealed: Boolean,
     val type: Type,
 ) {

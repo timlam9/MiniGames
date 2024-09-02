@@ -15,14 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
 import games.hideAndChess.model.HideAndChessCell
-import ui.theme.*
+import games.toComposeColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HNCCell(
-    gameColor: GameColor,
+    color: MiniGamesColor,
     type: HideAndChessCell.Type,
     mark: HideAndChessCell.Mark,
     shouldReveal: Boolean,
@@ -31,18 +31,6 @@ fun HNCCell(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundGameColor = when (gameColor) {
-        GameColor.PURPLE -> Purple
-        GameColor.ORANGE -> Orange
-        GameColor.BLUE -> Blue
-        GameColor.GREEN -> Green
-        GameColor.GRAY -> Gray
-        GameColor.PINK -> Pink
-        GameColor.CIEL -> Ciel
-        GameColor.RED -> Red
-        GameColor.BROWN -> Brown
-        GameColor.YELLOW -> Yellow
-    }
 
     val typeIcon = when (type) {
         HideAndChessCell.Type.NONE -> null
@@ -62,7 +50,7 @@ fun HNCCell(
                 color = Color.Black,
             )
             .fillMaxSize()
-            .background(color = backgroundGameColor)
+            .background(color = color.toComposeColor())
             .combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

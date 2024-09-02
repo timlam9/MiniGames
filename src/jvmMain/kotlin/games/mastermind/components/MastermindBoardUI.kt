@@ -43,7 +43,7 @@ fun MastermindBoardUI(
                     board.value.find { it.position.x == x && it.position.y == y }
                         ?.run {
                             MastermindCellUI(
-                                gameColor = gameColor,
+                                color = color,
                                 onClick = { onCellClick(this) },
                                 onLongClick = { onCellLongClick(this) },
                                 isRevealed = isRevealed,

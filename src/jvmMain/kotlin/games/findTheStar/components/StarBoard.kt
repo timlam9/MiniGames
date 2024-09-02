@@ -41,7 +41,7 @@ fun StarBoard(
                     board.value.find { it.position.x == x && it.position.y == y }?.run {
                         StarCell(
                             id = id.toString(),
-                            gameColor = gameColor,
+                            color = color,
                             type = type,
                             isDiscovered = isDiscovered,
                             onClick = { onCellClick(this) },

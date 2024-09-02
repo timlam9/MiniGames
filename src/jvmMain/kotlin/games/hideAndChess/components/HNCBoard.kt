@@ -43,7 +43,7 @@ fun HNCBoard(
                     board.value.find { it.positionX == x && it.positionY == y }
                         ?.run {
                             HNCCell(
-                                gameColor = gameColor,
+                                color = color,
                                 type = type,
                                 mark = mark,
                                 onClick = { onCellClick(this) },

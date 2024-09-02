@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
 import games.mastermind.model.MastermindCell
-import ui.theme.*
+import games.toComposeColor
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MastermindCellUI(
-    gameColor: GameColor?,
+    color: MiniGamesColor?,
     isRevealed: Boolean,
     isCode: Boolean,
     type: MastermindCell.Type,
@@ -31,20 +31,6 @@ fun MastermindCellUI(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundColor = when (gameColor) {
-        GameColor.PURPLE -> Purple
-        GameColor.ORANGE -> Orange
-        GameColor.BLUE -> Blue
-        GameColor.GREEN -> Green
-        GameColor.GRAY -> Gray
-        GameColor.PINK -> Pink
-        GameColor.CIEL -> Ciel
-        GameColor.RED -> Red
-        GameColor.BROWN -> Brown
-        GameColor.YELLOW -> Yellow
-        else -> Color.LightGray
-    }
-
     Box(
         modifier = modifier
             .border(width = 1.dp, color = Color.Black)
@@ -65,7 +51,7 @@ fun MastermindCellUI(
                     .padding(16.dp)
                     .fillMaxSize()
                     .clip(CircleShape)
-                    .background(color = if (isRevealed) backgroundColor else Color.Black)
+                    .background(color = if (isRevealed) color?.toComposeColor() ?: Color.LightGray else Color.Black)
             )
         }
 

@@ -1,13 +1,13 @@
 package games.batlleship.model
 
-import games.GameColor
+import games.MiniGamesColor
 
 data class BattleshipCell(
     val id: Int,
     val position: Position,
     val isAttacked: Boolean,
     val isRevealed: Boolean,
-    val gameColor: GameColor,
+    val color: MiniGamesColor,
     val type: Type,
     val shipDirection: ShipDirection,
 ) {

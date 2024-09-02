@@ -1,13 +1,13 @@
 package games.findTheStar.model
 
-import games.GameColor
+import games.MiniGamesColor
 
 data class FindTheStarCell(
     val id: Int,
     val position: Position,
     val type: Type,
     val isDiscovered: Boolean,
-    val gameColor: GameColor
+    val color: MiniGamesColor
 ) {
 
     data class Position(

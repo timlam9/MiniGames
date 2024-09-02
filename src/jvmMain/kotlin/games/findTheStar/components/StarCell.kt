@@ -17,33 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
 import games.findTheStar.model.FindTheStarCell
+import games.toComposeColor
 import ui.design.DefaultText
-import ui.theme.*
 
 @Composable
 fun StarCell(
     id: String,
-    gameColor: GameColor,
+    color: MiniGamesColor,
     type: FindTheStarCell.Type,
     isDiscovered: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundGameColor = when (gameColor) {
-        GameColor.PURPLE -> Purple
-        GameColor.ORANGE -> Orange
-        GameColor.BLUE -> Blue
-        GameColor.GREEN -> Green
-        GameColor.GRAY -> Gray
-        GameColor.PINK -> Pink
-        GameColor.CIEL -> Ciel
-        GameColor.RED -> Red
-        GameColor.BROWN -> Brown
-        GameColor.YELLOW -> Yellow
-    }
-
     val typeIcon = when (type) {
         FindTheStarCell.Type.EmptySpace -> null
         FindTheStarCell.Type.Rocket.Down -> "hide/ic_rocket_down.png"
@@ -69,7 +56,7 @@ fun StarCell(
                 color = Color.Black,
             )
             .fillMaxSize()
-            .background(color = backgroundGameColor)
+            .background(color = color.toComposeColor())
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

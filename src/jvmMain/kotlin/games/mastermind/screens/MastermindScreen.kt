@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
 import games.mastermind.components.MastermindBoardUI
 import games.mastermind.model.MastermindCell
 import games.mastermind.model.MastermindState
@@ -26,12 +26,12 @@ import ui.theme.Purple
 @Composable
 fun MastermindScreen(
     state: MastermindState,
-    onCellClick: (MastermindCell, GameColor) -> Unit,
+    onCellClick: (MastermindCell, MiniGamesColor) -> Unit,
     onCellLongClick: (MastermindCell) -> Unit,
     onPlayAgainClick: () -> Unit,
     onRevealBoardClick: () -> Unit,
 ) {
-    var selectedColor by remember { mutableStateOf(GameColor.PURPLE) }
+    var selectedColor by remember { mutableStateOf(MiniGamesColor.PURPLE) }
 
     Row(
         modifier = Modifier.fillMaxSize().background(Color.LightGray),

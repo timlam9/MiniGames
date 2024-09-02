@@ -18,15 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import games.GameColor
+import games.MiniGamesColor
 import games.batlleship.model.BattleshipCell
+import games.toComposeColor
 import ui.design.DefaultText
 import ui.theme.*
 
 @Composable
 fun BattleshipCellUI(
     title: String,
-    gameColor: GameColor,
+    color: MiniGamesColor,
     type: BattleshipCell.Type,
     isAttacked: Boolean,
     isRevealed: Boolean,
@@ -34,19 +35,6 @@ fun BattleshipCellUI(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val backgroundGameColor = when (gameColor) {
-        GameColor.PURPLE -> Purple
-        GameColor.ORANGE -> Orange
-        GameColor.BLUE -> Blue
-        GameColor.GREEN -> Green
-        GameColor.GRAY -> Gray
-        GameColor.PINK -> Pink
-        GameColor.CIEL -> Ciel
-        GameColor.RED -> Red
-        GameColor.BROWN -> Brown
-        GameColor.YELLOW -> Yellow
-    }
-
     val typeIcon = when (type) {
         BattleshipCell.Type.CARRIER_A -> "battleship/carrier_01.png"
         BattleshipCell.Type.CARRIER_B -> "battleship/carrier_02.png"
@@ -81,7 +69,7 @@ fun BattleshipCellUI(
                 color = Color.Black,
             )
             .fillMaxSize()
-            .background(color = if (isRevealed) Gray else backgroundGameColor)
+            .background(color = if (isRevealed) Gray else color.toComposeColor())
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,

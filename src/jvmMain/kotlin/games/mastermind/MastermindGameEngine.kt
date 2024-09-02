@@ -1,7 +1,7 @@
 package games.mastermind
 
 import GameEngine
-import games.GameColor
+import games.MiniGamesColor
 import games.mastermind.model.MastermindCell
 import games.mastermind.model.MastermindState
 import games.mastermind.model.generateRandomMastermindBoard
@@ -18,13 +18,13 @@ class MastermindGameEngine : GameEngine {
     private val _state: MutableStateFlow<MastermindState> = MutableStateFlow(initialState)
     val state: StateFlow<MastermindState> = _state.asStateFlow()
 
-    fun onCellClick(cell: MastermindCell, color: GameColor) {
+    fun onCellClick(cell: MastermindCell, color: MiniGamesColor) {
         _state.update { currentState ->
             val newBoard = currentState.board.copy(
                 value = currentState.board.value.map { currentCell ->
                     if (cell.id == currentCell.id) {
                         currentCell.copy(
-                            gameColor = color,
+                            color = color,
                         )
                     } else {
                         currentCell
@@ -35,9 +35,9 @@ class MastermindGameEngine : GameEngine {
                 .filter { it.position.y == cell.position.y }
                 .filter { it.type is MastermindCell.Type.PlayerCell }
 
-            if (currentRow.all { it.gameColor != null }) {
+            if (currentRow.all { it.color != null }) {
                 val hints = mutableListOf<MastermindCell.Hint>()
-                val rowColors = currentRow.map { it.gameColor }.toMutableList()
+                val rowColors = currentRow.map { it.color }.toMutableList()
                 val code = mastermindCode.toMutableList()
                 val rightCells = mutableListOf<Int>()
 
@@ -90,7 +90,7 @@ class MastermindGameEngine : GameEngine {
         if (_state.value.board.value
                 .filterNot { it.position.y == 0 }
                 .filter { it.type == MastermindCell.Type.PlayerCell }
-                .all { it.gameColor != null }
+                .all { it.color != null }
         ) {
             onRevealBoardClick()
         }
