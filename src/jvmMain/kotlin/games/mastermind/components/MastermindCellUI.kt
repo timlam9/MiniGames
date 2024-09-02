@@ -1,10 +1,9 @@
 package games.mastermind.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,7 +18,6 @@ import games.MiniGamesColor
 import games.mastermind.model.MastermindCell
 import games.toComposeColor
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MastermindCellUI(
     color: MiniGamesColor?,
@@ -28,7 +26,6 @@ fun MastermindCellUI(
     type: MastermindCell.Type,
     hints: List<MastermindCell.Hint>,
     onClick: () -> Unit,
-    onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -36,11 +33,10 @@ fun MastermindCellUI(
             .border(width = 1.dp, color = Color.Black)
             .fillMaxSize()
             .background(color = if (type is MastermindCell.Type.PlayerCell) Color.White else Color.LightGray)
-            .combinedClickable(
+            .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick,
-                onLongClick = onLongClick,
                 enabled = type is MastermindCell.Type.PlayerCell && !isCode
             ),
         contentAlignment = Alignment.Center,

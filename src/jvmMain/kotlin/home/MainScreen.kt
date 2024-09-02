@@ -167,7 +167,6 @@ private fun GamesNavigation(
         GameScreen.MASTERMIND -> MastermindScreen(
             state = mastermindState,
             onCellClick = mastermindGameEngine::onCellClick,
-            onCellLongClick = mastermindGameEngine::onCellLongClick,
             onPlayAgainClick = mastermindGameEngine::onPlayAgainClick,
             onRevealBoardClick = mastermindGameEngine::onRevealBoardClick,
         )

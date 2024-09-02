@@ -2,10 +2,7 @@ package games.mastermind
 
 import GameEngine
 import games.MiniGamesColor
-import games.mastermind.model.MastermindCell
-import games.mastermind.model.MastermindState
-import games.mastermind.model.generateRandomMastermindBoard
-import games.mastermind.model.mastermindCode
+import games.mastermind.model.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -36,23 +33,11 @@ class MastermindGameEngine : GameEngine {
                 .filter { it.type is MastermindCell.Type.PlayerCell }
 
             if (currentRow.all { it.color != null }) {
-                val hints = mutableListOf<MastermindCell.Hint>()
-                val rowColors = currentRow.map { it.color }.toMutableList()
+                val rowCodeCells = currentRow.toCodeCells()
                 val code = mastermindCode.toMutableList()
-                val rightCells = mutableListOf<Int>()
+                val hints = rowCodeCells.getHints(code = code)
 
-                code.forEachIndexed { index, _ ->
-                    if (rowColors[index] == code[index]) {
-                        hints.add(MastermindCell.Hint.RIGHT_POSITION)
-                        rightCells.add(index)
-                    }
-                }
-
-                rowColors.forEachIndexed { index, gameColor ->
-                    if (!rightCells.contains(index) && code.contains(gameColor)) hints.add(MastermindCell.Hint.RIGHT_COLOR)
-                }
-
-                if (rowColors == code) {
+                if (rowCodeCells == code) {
                     currentState.copy(
                         board = newBoard.copy(
                             value = newBoard.value.map { currentCell ->
@@ -94,10 +79,6 @@ class MastermindGameEngine : GameEngine {
         ) {
             onRevealBoardClick()
         }
-    }
-
-    fun onCellLongClick(cell: MastermindCell) {
-
     }
 
     fun onPlayAgainClick() {

@@ -17,7 +17,6 @@ import games.mastermind.model.MastermindCell
 fun MastermindBoardUI(
     board: MastermindBoard,
     onCellClick: (MastermindCell) -> Unit,
-    onCellLongClick: (MastermindCell) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -45,7 +44,6 @@ fun MastermindBoardUI(
                             MastermindCellUI(
                                 color = color,
                                 onClick = { onCellClick(this) },
-                                onLongClick = { onCellLongClick(this) },
                                 isRevealed = isRevealed,
                                 isCode = position.y == 0,
                                 type = type,

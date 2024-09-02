@@ -27,7 +27,6 @@ import ui.theme.Purple
 fun MastermindScreen(
     state: MastermindState,
     onCellClick: (MastermindCell, MiniGamesColor) -> Unit,
-    onCellLongClick: (MastermindCell) -> Unit,
     onPlayAgainClick: () -> Unit,
     onRevealBoardClick: () -> Unit,
 ) {
@@ -41,7 +40,6 @@ fun MastermindScreen(
             MastermindBoardUI(
                 board = state.board,
                 onCellClick = { onCellClick(it, selectedColor) },
-                onCellLongClick = onCellLongClick,
                 modifier = Modifier,
             )
         } else {
