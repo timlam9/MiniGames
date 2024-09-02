@@ -5,7 +5,9 @@ import androidx.compose.ui.awt.awtEventOrNull
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.isCtrlPressed
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
+import androidx.compose.ui.window.rememberWindowState
 import games.batlleship.BattleshipGameEngine
 import games.deal.DealGameEngine
 import games.memo.MemoGameEngine
@@ -14,11 +16,44 @@ import games.deal.model.DealItem
 import games.findTheStar.FindTheStarGameEngine
 import games.hangman.HangmanGameEngine
 import games.hideAndChess.HideAndChessGameEngine
+import games.kim.KimGameEngine
 import games.mastermind.MastermindGameEngine
 import home.MainScreen
 
 private var keyEventId by mutableStateOf<Int?>(null)
 private var type by mutableStateOf(DealItem.Type.BLUE)
+
+fun main() = application {
+    val windowState = rememberWindowState(placement = WindowPlacement.Fullscreen)
+
+    val memoGameEngine = MemoGameEngine()
+    val dealGameEngine = DealGameEngine()
+    val hangmanGameEngine = HangmanGameEngine()
+    val hideAndChessGameEngine = HideAndChessGameEngine()
+    val findTheStarGameEngine = FindTheStarGameEngine()
+    val battleshipGameEngine = BattleshipGameEngine()
+    val mastermindGameEngine = MastermindGameEngine()
+    val kimGameEngine = KimGameEngine(windowState.size)
+
+    Window(
+        onKeyEvent = { keyEvent -> return@Window onKeyEvent(keyEvent) },
+        onCloseRequest = ::exitApplication,
+        state = windowState,
+    ) {
+        App(
+            keyEventId = keyEventId,
+            onKeyEventHandled = { keyEventId = null },
+            memoGameEngine = memoGameEngine,
+            dealGameEngine = dealGameEngine,
+            hangmanGameEngine = hangmanGameEngine,
+            hideAndChessGameEngine = hideAndChessGameEngine,
+            findTheStarGameEngine = findTheStarGameEngine,
+            battleshipGameEngine = battleshipGameEngine,
+            mastermindGameEngine = mastermindGameEngine,
+            kimGameEngine = kimGameEngine,
+        )
+    }
+}
 
 @Composable
 @Preview
@@ -32,6 +67,7 @@ fun App(
     findTheStarGameEngine: FindTheStarGameEngine,
     battleshipGameEngine: BattleshipGameEngine,
     mastermindGameEngine: MastermindGameEngine,
+    kimGameEngine: KimGameEngine,
 ) {
     LaunchedEffect(keyEventId) {
         keyEventId?.let { dealGameEngine.onKeyPressed(it, type) }
@@ -47,38 +83,11 @@ fun App(
             findTheStarGameEngine = findTheStarGameEngine,
             battleshipGameEngine = battleshipGameEngine,
             mastermindGameEngine = mastermindGameEngine,
+            kimGameEngine = kimGameEngine,
         )
     }
 }
 
-fun main() = application {
-    val memoGameEngine = MemoGameEngine()
-    val dealGameEngine = DealGameEngine()
-    val hangmanGameEngine = HangmanGameEngine()
-    val hideAndChessGameEngine = HideAndChessGameEngine()
-    val findTheStarGameEngine = FindTheStarGameEngine()
-    val battleshipGameEngine = BattleshipGameEngine()
-    val mastermindGameEngine = MastermindGameEngine()
-
-    Window(
-        onKeyEvent = { keyEvent ->
-            return@Window onKeyEvent(keyEvent)
-        },
-        onCloseRequest = ::exitApplication,
-    ) {
-        App(
-            keyEventId = keyEventId,
-            onKeyEventHandled = { keyEventId = null },
-            memoGameEngine = memoGameEngine,
-            dealGameEngine = dealGameEngine,
-            hangmanGameEngine = hangmanGameEngine,
-            hideAndChessGameEngine = hideAndChessGameEngine,
-            findTheStarGameEngine = findTheStarGameEngine,
-            battleshipGameEngine = battleshipGameEngine,
-            mastermindGameEngine = mastermindGameEngine,
-        )
-    }
-}
 
 private fun onKeyEvent(keyEvent: KeyEvent): Boolean {
     val char = keyEvent.awtEventOrNull?.keyChar

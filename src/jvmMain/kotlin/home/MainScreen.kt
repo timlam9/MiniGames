@@ -21,6 +21,8 @@ import games.hangman.HangmanGameEngine
 import games.hangman.screens.HangmanScreen
 import games.hideAndChess.HideAndChessGameEngine
 import games.hideAndChess.screens.HideAndChessScreen
+import games.kim.KimGameEngine
+import games.kim.screens.KimGameScreen
 import games.mastermind.MastermindGameEngine
 import games.mastermind.screens.MastermindScreen
 import games.memo.MemoGameEngine
@@ -37,6 +39,7 @@ fun MainScreen(
     findTheStarGameEngine: FindTheStarGameEngine,
     battleshipGameEngine: BattleshipGameEngine,
     mastermindGameEngine: MastermindGameEngine,
+    kimGameEngine: KimGameEngine,
 ) {
     var gameInfoScreen: GameInfoScreen by remember { mutableStateOf(GameInfoScreen.None) }
     var screen: GameScreen by remember { mutableStateOf(GameScreen.HOME) }
@@ -81,9 +84,10 @@ fun MainScreen(
                     hideAndChessGameEngine = hideAndChessGameEngine,
                     findTheStarGameEngine = findTheStarGameEngine,
                     battleshipGameEngine = battleshipGameEngine,
+                    mastermindGameEngine = mastermindGameEngine,
+                    kimGameEngine = kimGameEngine,
                     onGameCardClick = { screen = it },
                     onInfoIconClick = { gameInfoScreen = it },
-                    mastermindGameEngine = mastermindGameEngine,
                 )
             }
         }
@@ -100,6 +104,7 @@ private fun GamesNavigation(
     findTheStarGameEngine: FindTheStarGameEngine,
     battleshipGameEngine: BattleshipGameEngine,
     mastermindGameEngine: MastermindGameEngine,
+    kimGameEngine: KimGameEngine,
     onGameCardClick: (GameScreen) -> Unit,
     onInfoIconClick: (GameInfoScreen) -> Unit,
 ) {
@@ -110,6 +115,7 @@ private fun GamesNavigation(
     val findTheStarState by findTheStarGameEngine.state.collectAsState()
     val battleshipState by battleshipGameEngine.state.collectAsState()
     val mastermindState by mastermindGameEngine.state.collectAsState()
+    val kimState by kimGameEngine.state.collectAsState()
 
     when (screen) {
         GameScreen.HOME -> {
@@ -170,6 +176,12 @@ private fun GamesNavigation(
             onPlayAgainClick = mastermindGameEngine::onPlayAgainClick,
             onRevealBoardClick = mastermindGameEngine::onRevealBoardClick,
         )
+
+        GameScreen.KIM_GAME -> KimGameScreen(
+            state = kimState,
+            onPlayAgainClick = kimGameEngine::onPlayAgainClick,
+            onRevealBoardClick = kimGameEngine::onRevealBoardClick,
+        )
     }
 }
 
@@ -210,6 +222,7 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.FIND_THE_STAR -> GameInfoScreen.None
     GameScreen.BATTLESHIP -> GameInfoScreen.None
     GameScreen.MASTERMIND -> GameInfoScreen.None
+    GameScreen.KIM_GAME -> GameInfoScreen.None
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {
