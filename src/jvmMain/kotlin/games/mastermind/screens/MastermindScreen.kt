@@ -20,6 +20,7 @@ import games.mastermind.model.MastermindState
 import games.mastermind.model.mastermindColors
 import games.toComposeColor
 import ui.design.DefaultButton
+import ui.design.DefaultText
 import ui.theme.Gray
 import ui.theme.Purple
 
@@ -60,8 +61,9 @@ fun MastermindScreen(
         Column(
             modifier = Modifier.fillMaxHeight().padding(start = 10.dp, end = 20.dp, top = 10.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.Start,
         ) {
+            DefaultText("Το μαύρο σημαίνει ότι έχεις πετύχει το σωστό χρώμα και το άσπρο την σωστή θέση.")
             Spacer(modifier = Modifier.weight(1f))
             Column(
                 verticalArrangement = Arrangement.spacedBy(10.dp),

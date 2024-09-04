@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
+private const val VISIBLE_ITEMS_SIZE = 20
+
 class KimGameEngine(private val windowSize: DpSize) : GameEngine {
 
     private val initialState = KimState(
@@ -16,7 +18,7 @@ class KimGameEngine(private val windowSize: DpSize) : GameEngine {
         shouldShowItems = true,
     )
 
-    private fun generateItems(size: Int = 10): List<KimItem> = KimItem.Type.values()
+    private fun generateItems(size: Int = VISIBLE_ITEMS_SIZE): List<KimItem> = KimItem.Type.values()
         .toList()
         .shuffled()
         .take(size)
@@ -47,7 +49,7 @@ class KimGameEngine(private val windowSize: DpSize) : GameEngine {
         }
     }
 
-    private fun generatePositions(size: Int = 10): List<KimItem.Position> {
+    private fun generatePositions(size: Int = VISIBLE_ITEMS_SIZE): List<KimItem.Position> {
         val positions = mutableListOf<KimItem.Position>()
 
         repeat(size) {
@@ -84,7 +86,6 @@ class KimGameEngine(private val windowSize: DpSize) : GameEngine {
                     kimItem.copy(position = newPositions[index])
                 }
             )
-
         }
     }
 }

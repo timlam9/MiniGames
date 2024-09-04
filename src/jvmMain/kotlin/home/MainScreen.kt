@@ -75,6 +75,14 @@ fun MainScreen(
                 gameEngine = dealGameEngine,
             )
 
+            is GameInfoScreen.Hangman -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.Hangman).title,
+                content = (gameInfoScreen as GameInfoScreen.Hangman).content,
+                image = (gameInfoScreen as GameInfoScreen.Hangman).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = hangmanGameEngine,
+            )
+
             GameInfoScreen.None -> {
                 GamesNavigation(
                     screen = screen,
@@ -90,6 +98,42 @@ fun MainScreen(
                     onInfoIconClick = { gameInfoScreen = it },
                 )
             }
+
+            is GameInfoScreen.FindTheStar -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.FindTheStar).title,
+                content = (gameInfoScreen as GameInfoScreen.FindTheStar).content,
+                image = (gameInfoScreen as GameInfoScreen.FindTheStar).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = findTheStarGameEngine,
+            )
+            is GameInfoScreen.HideAndChess -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.HideAndChess).title,
+                content = (gameInfoScreen as GameInfoScreen.HideAndChess).content,
+                image = (gameInfoScreen as GameInfoScreen.HideAndChess).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = hideAndChessGameEngine,
+            )
+            is GameInfoScreen.Battleship -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.Battleship).title,
+                content = (gameInfoScreen as GameInfoScreen.Battleship).content,
+                image = (gameInfoScreen as GameInfoScreen.Battleship).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = battleshipGameEngine,
+            )
+            is GameInfoScreen.KimGame -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.KimGame).title,
+                content = (gameInfoScreen as GameInfoScreen.KimGame).content,
+                image = (gameInfoScreen as GameInfoScreen.KimGame).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = kimGameEngine,
+            )
+            is GameInfoScreen.Mastermind -> GameInfoScreen(
+                title = (gameInfoScreen as GameInfoScreen.Mastermind).title,
+                content = (gameInfoScreen as GameInfoScreen.Mastermind).content,
+                image = (gameInfoScreen as GameInfoScreen.Mastermind).image,
+                onBackClick = { gameInfoScreen = GameInfoScreen.None },
+                gameEngine = mastermindGameEngine,
+            )
         }
     }
 }
@@ -217,12 +261,12 @@ private fun GameScreen.toGameInfoScreen() = when (this) {
     GameScreen.HOME -> GameInfoScreen.None
     GameScreen.MEMO -> GameInfoScreen.Memo()
     GameScreen.DEAL -> GameInfoScreen.Deal()
-    GameScreen.HANGMAN -> GameInfoScreen.None
-    GameScreen.HIDE_AND_CHESS -> GameInfoScreen.None
-    GameScreen.FIND_THE_STAR -> GameInfoScreen.None
-    GameScreen.BATTLESHIP -> GameInfoScreen.None
-    GameScreen.MASTERMIND -> GameInfoScreen.None
-    GameScreen.KIM_GAME -> GameInfoScreen.None
+    GameScreen.HANGMAN -> GameInfoScreen.Hangman()
+    GameScreen.HIDE_AND_CHESS -> GameInfoScreen.HideAndChess()
+    GameScreen.FIND_THE_STAR -> GameInfoScreen.FindTheStar()
+    GameScreen.BATTLESHIP -> GameInfoScreen.Battleship()
+    GameScreen.MASTERMIND -> GameInfoScreen.Mastermind()
+    GameScreen.KIM_GAME -> GameInfoScreen.KimGame()
 }
 
 private fun List<GameScreen>.filterValidMenuItems(): List<GameScreen> = filterNot {

@@ -69,7 +69,6 @@ fun GameInfoScreen(
             contentScale = ContentScale.Fit,
         )
         when (gameEngine) {
-            is MemoGameEngine -> Unit
             is DealGameEngine -> {
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -134,6 +133,7 @@ fun GameInfoScreen(
                     }
                 }
             }
+            else -> Unit
         }
         Spacer(modifier = Modifier.weight(1f))
     }
