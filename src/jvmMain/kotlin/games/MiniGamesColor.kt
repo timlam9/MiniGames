@@ -16,6 +16,8 @@ enum class MiniGamesColor {
     CIEL, // C
 }
 
+fun getRandomColor() = MiniGamesColor.values().random().toComposeColor()
+
 
 fun MiniGamesColor.toComposeColor() = when (this) {
     MiniGamesColor.PURPLE -> Purple

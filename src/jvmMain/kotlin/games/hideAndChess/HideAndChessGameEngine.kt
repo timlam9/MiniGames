@@ -11,8 +11,9 @@ class HideAndChessGameEngine : GameEngine {
 
     private val _state: MutableStateFlow<HideAndChessState> = MutableStateFlow(
         HideAndChessState(
-            board = HideAndChessBoard(value = decodeBoard(InitialEncodedBoard)),
+            board = HideAndChessBoard(value = decodeBoard(levels.first().board)),
             shouldReveal = false,
+            selectedLevel = null,
         )
     )
     val state: StateFlow<HideAndChessState> = _state.asStateFlow()
@@ -120,9 +121,33 @@ class HideAndChessGameEngine : GameEngine {
     fun onResetClick() {
         _state.update { currentState ->
             currentState.copy(
-                board = HideAndChessBoard(value = decodeBoard(InitialEncodedBoard)),
+                board = HideAndChessBoard(
+                    value = decodeBoard(
+                        encodedBoard = currentState.selectedLevel?.board ?: levels.first().board
+                    )
+                ),
                 shouldReveal = false,
             )
+        }
+    }
+
+    fun onLevelClick(level: Level) {
+        _state.update { currentState ->
+            currentState.copy(
+                selectedLevel = level,
+                board = HideAndChessBoard(
+                    value = decodeBoard(
+                        encodedBoard = level.board
+                    )
+                ),
+                shouldReveal = false,
+            )
+        }
+    }
+
+    fun onChooseLevelClick() {
+        _state.update { currentState ->
+            currentState.copy(selectedLevel = null)
         }
     }
 }

@@ -12,10 +12,8 @@ import games.hideAndChess.components.HNCBoard
 import games.hideAndChess.model.HideAndChessCell
 import games.hideAndChess.model.HideAndChessState
 import ui.design.DefaultButton
-import ui.theme.Blue
-import ui.theme.Green
-import ui.theme.Orange
-import ui.theme.Purple
+import ui.theme.*
+import kotlin.reflect.KFunction0
 
 @Composable
 fun HideAndChessScreen(
@@ -26,6 +24,7 @@ fun HideAndChessScreen(
     onRandomChessPieceRevealClick: () -> Unit,
     onRandomXMarkRevealClick: () -> Unit,
     onResetClick: () -> Unit,
+    onChooseLevelClick: KFunction0<Unit>,
 ) {
     Row(
         modifier = Modifier.fillMaxSize().background(Color.LightGray),
@@ -64,10 +63,17 @@ fun HideAndChessScreen(
                 textColor = MaterialTheme.colors.primaryVariant,
             )
             DefaultButton(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 20.dp),
                 text = "Reset",
                 onClick = onResetClick,
                 color = Green,
+                textColor = MaterialTheme.colors.primaryVariant,
+            )
+            DefaultButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Choose level",
+                onClick = onChooseLevelClick,
+                color = Red,
                 textColor = MaterialTheme.colors.primaryVariant,
             )
         }

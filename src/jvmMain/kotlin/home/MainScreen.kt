@@ -20,6 +20,8 @@ import games.findTheStar.screens.FindTheStarScreen
 import games.hangman.HangmanGameEngine
 import games.hangman.screens.HangmanScreen
 import games.hideAndChess.HideAndChessGameEngine
+import games.hideAndChess.model.levels
+import games.hideAndChess.screens.HideAndChessLevelsScreen
 import games.hideAndChess.screens.HideAndChessScreen
 import games.kim.KimGameEngine
 import games.kim.screens.KimGameScreen
@@ -189,15 +191,23 @@ private fun GamesNavigation(
             onPlayAgainClick = hangmanGameEngine::onPlayAgainClick,
         )
 
-        GameScreen.HIDE_AND_CHESS -> HideAndChessScreen(
-            state = hideAndChessState,
-            onCellClick = hideAndChessGameEngine::onCellClick,
-            onCellLongClick = hideAndChessGameEngine::onCellLongClick,
-            onRevealClick = hideAndChessGameEngine::onRevealClick,
-            onRandomChessPieceRevealClick = hideAndChessGameEngine::onRandomChessPieceRevealClick,
-            onRandomXMarkRevealClick = hideAndChessGameEngine::onRandomXMarkRevealClick,
-            onResetClick = hideAndChessGameEngine::onResetClick,
-        )
+        GameScreen.HIDE_AND_CHESS -> if (hideAndChessState.selectedLevel != null) {
+            HideAndChessScreen(
+                state = hideAndChessState,
+                onCellClick = hideAndChessGameEngine::onCellClick,
+                onCellLongClick = hideAndChessGameEngine::onCellLongClick,
+                onRevealClick = hideAndChessGameEngine::onRevealClick,
+                onRandomChessPieceRevealClick = hideAndChessGameEngine::onRandomChessPieceRevealClick,
+                onRandomXMarkRevealClick = hideAndChessGameEngine::onRandomXMarkRevealClick,
+                onResetClick = hideAndChessGameEngine::onResetClick,
+                onChooseLevelClick = hideAndChessGameEngine::onChooseLevelClick,
+            )
+        } else {
+            HideAndChessLevelsScreen(
+                levels = levels,
+                onLevelClick = hideAndChessGameEngine::onLevelClick,
+            )
+        }
 
         GameScreen.FIND_THE_STAR -> FindTheStarScreen(
             state = findTheStarState,
